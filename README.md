@@ -1,74 +1,79 @@
 >[!NOTE]
-> **[📢 New: Shannon is now available via `npx @keygraph/shannon`. →](https://github.com/KeygraphHQ/shannon/discussions/249)**
+> **[📢 New: Shanom is now available via `npx shanom`. →](https://github.com/JonusNattapong/shanom/discussions/249)**
 
 <div align="center">
 
-<img src="./assets/github-banner.png" alt="Shannon — AI Pentester for Web Applications and APIs" width="100%">
+<img src="./assets/github-banner.png" alt="Shanom — AI Pentester for Web Applications and APIs" width="100%">
 
-# Shannon — AI Pentester by Keygraph
+# Shanom — AI Pentester
 
-<a href="https://trendshift.io/repositories/15604" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15604" alt="KeygraphHQ%2Fshannon | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15604" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15604" alt="JonusNattapong%2Fshanom | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-Shannon is an autonomous, white-box AI pentester for web applications and APIs. <br />
+Shanom is an autonomous, white-box AI pentester for web applications and APIs. <br />
 It analyzes your source code, identifies attack vectors, and executes real exploits to prove vulnerabilities before they reach production.
 
 ---
 
 <a href="https://discord.gg/9ZqQPuhJB7"><img src="./assets/discord.png" height="40" alt="Join Discord"></a>
-<a href="https://keygraph.io/"><img src="./assets/Keygraph_Button.png" height="40" alt="Visit Keygraph.io"></a>
 
 ---
 </div>
 
-## What is Shannon?
+## What is Shanom?
 
-Shannon is an AI pentester developed by [Keygraph](https://keygraph.io). It performs white-box security testing of web applications and their underlying APIs by combining source code analysis with live exploitation.
+Shanom is an AI pentester. It performs white-box security testing of web applications and their underlying APIs by combining source code analysis with live exploitation.
 
-Shannon analyzes your web application's source code to identify potential attack vectors, then uses browser automation and command-line tools to execute real exploits (injection attacks, authentication bypass, SSRF, XSS) against the running application and its APIs. Only vulnerabilities with a working proof-of-concept are included in the final report.
+Shanom analyzes your web application's source code to identify potential attack vectors, then uses browser automation and command-line tools to execute real exploits (injection attacks, authentication bypass, SSRF, XSS) against the running application and its APIs. Only vulnerabilities with a working proof-of-concept are included in the final report.
 
-**Why Shannon Exists**
+**Why Shanom Exists**
 
 Thanks to tools like Claude Code and Cursor, your team ships code non-stop. But your penetration test? That happens once a year. This creates a *massive* security gap. For the other 364 days, you could be unknowingly shipping vulnerabilities to production.
 
-Shannon closes that gap by providing on-demand, automated penetration testing that can run against every build or release.
+Shanom closes that gap by providing on-demand, automated penetration testing that can run against every build or release.
 
-## Shannon in Action
+## Shanom in Action
 
-Shannon identified 20+ vulnerabilities in OWASP Juice Shop, including authentication bypass and database exfiltration. [Full report →](sample-reports/shannon-report-juice-shop.md)
+Shanom identified 20+ vulnerabilities in OWASP Juice Shop, including authentication bypass and database exfiltration. [Full report →](sample-reports/shanom-report-juice-shop.md)
 
-![Demo](assets/shannon-action.gif)
+![Demo](assets/shanom-action.gif)
 
 ## Features
 
-- **Fully Autonomous Operation**: A single command launches the full pentest. Shannon handles 2FA/TOTP logins (including SSO), browser navigation, exploitation, and report generation without manual intervention.
+- **Fully Autonomous Operation**: A single command launches the full pentest. Shanom handles 2FA/TOTP logins (including SSO), browser navigation, exploitation, and report generation without manual intervention.
 - **Reproducible Proof-of-Concept Exploits**: The final report contains only proven, exploitable findings with copy-and-paste PoCs. Vulnerabilities that cannot be exploited are not reported.
 - **OWASP Vulnerability Coverage**: Identifies and validates Injection, XSS, SSRF, and Broken Authentication/Authorization, with additional categories in development.
 - **Code-Aware Dynamic Testing**: Analyzes source code to guide attack strategy, then validates findings with live browser and CLI-based exploits against the running application.
+- **CPG Engine with LLM Reasoning**: Shanom Pro transforms your codebase into a Code Property Graph (CPG) combining AST, CFG, and PDG. At every node, an LLM evaluates security properties and data flow paths from sources to sinks.
+- **Static Analysis (SAST)**: Detects point vulnerabilities including weak cryptography, hardcoded credentials, insecure configuration, missing security headers, and weak random number generation.
+- **SCA with Reachability Analysis**: Identifies vulnerable dependencies and traces whether vulnerable functions are actually reachable from your code's entry points.
+- **Secrets Detection**: Combines regex pattern matching, LLM-based detection for custom formats, and entropy analysis to find exposed credentials.
+- **Static-Dynamic Correlation**: Validates static findings with dynamic exploits. Every reported vulnerability has both a code location and a working proof-of-concept.
+- **Enhanced Reporting**: Generate technical pentest reports, remediation guidance with prioritized fix instructions, and executive/board-level summaries.
 - **Integrated Security Tooling**: Leverages Nmap, Subfinder, WhatWeb, and Schemathesis during reconnaissance and discovery phases.
 - **Parallel Processing**: Vulnerability analysis and exploitation phases run concurrently across all attack categories.
 
 ## Product Line
 
-Shannon is developed by [Keygraph](https://keygraph.io) and available in two editions:
+Shanom is available in two editions:
 
 | Edition | License | Best For |
 |---------|---------|----------|
-| **Shannon Lite** | AGPL-3.0 | Local testing of your own applications. |
-| **Shannon Pro** | Commercial | Organizations needing a single AppSec platform (SAST, SCA, secrets, business logic testing, autonomous pentesting) with CI/CD integration and self-hosted deployment. |
+| **Shanom Lite** | AGPL-3.0 | Local testing of your own applications. |
+| **Shanom Pro** | Commercial | Organizations needing a single AppSec platform (SAST, SCA, secrets, business logic testing, autonomous pentesting) with CI/CD integration and self-hosted deployment. |
 
-> **This repository contains Shannon Lite,** the core autonomous AI pentesting framework. **Shannon Pro** is Keygraph's all-in-one AppSec platform, combining SAST, SCA, secrets scanning, business logic security testing, and autonomous AI pentesting in a single correlated workflow. Every finding is validated with a working proof-of-concept exploit.
+> **This repository contains Shanom Lite,** the core autonomous AI pentesting framework. **Shanom Pro** is Keygraph's all-in-one AppSec platform, combining SAST, SCA, secrets scanning, business logic security testing, and autonomous AI pentesting in a single correlated workflow. Every finding is validated with a working proof-of-concept exploit.
 
 > [!IMPORTANT]
-> **White-box only.** Shannon Lite is designed for **white-box (source-available)** application security testing.  
+> **White-box only.** Shanom Lite is designed for **white-box (source-available)** application security testing.  
 > It expects access to your application's source code and repository layout.
 
-### Shannon Pro: Architecture Overview
+### Shanom Pro: Architecture Overview
 
-Shannon Pro is an all-in-one application security platform that replaces the need to stitch together separate SAST, SCA, secrets scanning, and pentesting tools. It operates as a two-stage pipeline: agentic static analysis of the codebase, followed by autonomous AI penetration testing. Findings from both stages are cross-referenced and correlated, so every reported vulnerability has a working proof-of-concept exploit and a precise source code location.
+Shanom Pro is an all-in-one application security platform that replaces the need to stitch together separate SAST, SCA, secrets scanning, and pentesting tools. It operates as a two-stage pipeline: agentic static analysis of the codebase, followed by autonomous AI penetration testing. Findings from both stages are cross-referenced and correlated, so every reported vulnerability has a working proof-of-concept exploit and a precise source code location.
 
 **Stage 1: Agentic Static Analysis**
 
-Shannon Pro transforms the codebase into a Code Property Graph (CPG) combining the AST, control flow graph, and program dependence graph. It then runs five analysis capabilities:
+Shanom Pro transforms the codebase into a Code Property Graph (CPG) combining the AST, control flow graph, and program dependence graph. It then runs five analysis capabilities:
 
 - **Data Flow Analysis (SAST)**: Identifies sources (user input, API requests) and sinks (SQL queries, command execution), then traces paths between them. At each node, an LLM evaluates whether the specific sanitization applied is sufficient for the specific vulnerability in context, rather than relying on a hard-coded allowlist of safe functions.
 - **Point Issue Detection (SAST)**: LLM-based detection of single-location vulnerabilities: weak cryptography, hardcoded credentials, insecure configuration, missing security headers, weak RNG, disabled certificate validation, and overly permissive CORS.
@@ -78,7 +83,7 @@ Shannon Pro transforms the codebase into a Code Property Graph (CPG) combining t
 
 **Stage 2: Autonomous Dynamic Penetration Testing**
 
-The same multi-agent pentest pipeline as Shannon Lite (reconnaissance, parallel vulnerability analysis, parallel exploitation, reporting), enhanced with static findings injected into the exploitation queue. Static findings are mapped to Shannon's five attack domains (Injection, XSS, SSRF, Auth, Authz), and exploit agents attempt real proof-of-concept attacks against the running application for each finding.
+The same multi-agent pentest pipeline as Shanom Lite (reconnaissance, parallel vulnerability analysis, parallel exploitation, reporting), enhanced with static findings injected into the exploitation queue. Static findings are mapped to Shanom's five attack domains (Injection, XSS, SSRF, Auth, Authz), and exploit agents attempt real proof-of-concept attacks against the running application for each finding.
 
 **Static-Dynamic Correlation**
 
@@ -86,25 +91,27 @@ This is the core differentiator. A data flow vulnerability identified in static 
 
 **Deployment Model**
 
-Shannon Pro supports a self-hosted runner model (similar to GitHub Actions self-hosted runners). The data plane, which handles code access and all LLM API calls, runs entirely within the customer's infrastructure using the customer's own API keys. Source code never leaves the customer's network. The Keygraph control plane handles job orchestration, scan scheduling, and the reporting UI, receiving only aggregate findings.
+Shanom Pro supports a self-hosted runner model (similar to GitHub Actions self-hosted runners). The data plane, which handles code access and all LLM API calls, runs entirely within the customer's infrastructure using the customer's own API keys. Source code never leaves the customer's network. The Keygraph control plane handles job orchestration, scan scheduling, and the reporting UI, receiving only aggregate findings.
 
-| Capability | Shannon Lite | Shannon Pro (All-in-One AppSec) |
+| Capability | Shanom Lite | Shanom Pro (All-in-One AppSec) |
 | --- | --- | --- |
 | **Licensing** | AGPL-3.0 | Commercial |
-| **Static Analysis** | Code review prompting | Full agentic SAST, SCA, secrets, business logic testing |
+| **Static Analysis** | CPG-based SAST, SCA, secrets scanning | Full agentic analysis with enhanced coverage |
 | **Dynamic Testing** | Autonomous AI pentesting | Autonomous AI pentesting with static-dynamic correlation |
-| **Analysis Engine** | Code review prompting | CPG-based data flow with LLM reasoning at every node |
-| **Business Logic** | None | Automated invariant discovery, fuzzer generation, exploit synthesis |
-| **CI/CD Integration** | Manual / CLI | Native CI/CD, GitHub PR scanning |
-| **Deployment** | CLI | Managed cloud or self-hosted runner |
-| **Boundary Analysis** | None | Automatic service boundary detection with team routing |
+| **Analysis Engine** | CPG with LLM reasoning at every node | Enhanced CPG with business logic testing |
+| **SAST Coverage** | Data flow, point issues, crypto, secrets | + Business logic security testing |
+| **SCA** | Reachability analysis | + License compliance, SBOM generation |
+| **CI/CD Integration** | CLI-based | Native CI/CD, GitHub PR scanning, quality gates |
+| **Reporting** | Technical, Remediation, Board reports | + Custom dashboards, scheduled reports |
+| **Deployment** | Local CLI | Managed cloud or self-hosted runner |
+| **Multi-Tenancy** | Single user/org | Enterprise multi-tenancy with RBAC |
 
 [Full technical details →](./SHANNON-PRO.md)
 
 ## Table of Contents
 
-- [What is Shannon?](#what-is-shannon)
-- [Shannon in Action](#shannon-in-action)
+- [What is Shanom?](#what-is-shanom)
+- [Shanom in Action](#shanom-in-action)
 - [Features](#features)
 - [Product Line](#product-line)
 - [Setup & Usage Instructions](#setup--usage-instructions)
@@ -147,31 +154,31 @@ Shannon Pro supports a self-hosted runner model (similar to GitHub Actions self-
   - **[EXPERIMENTAL - UNSUPPORTED] Alternative providers via Router Mode** - OpenAI or Google Gemini via OpenRouter (see [Router Mode](#experimental---unsupported-router-mode-alternative-providers))
 
 > [!NOTE]
-> Docker is still required to use the `npx` workflow. Under the hood, the CLI pulls and runs a prebuilt Shannon worker image from Docker Hub, which is approximately 1 GB and contains Shannon plus all required dependencies.
+> Docker is still required to use the `npx` workflow. Under the hood, the CLI pulls and runs a prebuilt Shanom worker image from Docker Hub, which is approximately 1 GB and contains Shanom plus all required dependencies.
 
 ### Quick Start (Recommended: npx)
 
 ```bash
 # 1. Configure credentials (interactive wizard — one-time setup)
-npx @keygraph/shannon setup
+npx @keygraph/shanom setup
 
 # Or export env vars directly
 export ANTHROPIC_API_KEY=your-api-key
 
 # 2. Run a pentest
-npx @keygraph/shannon start -u https://your-app.com -r /path/to/your-repo
+npx @keygraph/shanom start -u https://your-app.com -r /path/to/your-repo
 ```
 
-Shannon will pull the worker image from Docker Hub, start the infrastructure, and launch an ephemeral worker container for the scan.
+Shanom will pull the worker image from Docker Hub, start the infrastructure, and launch an ephemeral worker container for the scan.
 
 ### Clone and Build
 
-Use this if you want to run Shannon from a local clone, modify Shannon itself, or keep the worker image built locally.
+Use this if you want to run Shanom from a local clone, modify Shanom itself, or keep the worker image built locally.
 
 ```bash
-# 1. Clone Shannon
-git clone https://github.com/KeygraphHQ/shannon.git
-cd shannon
+# 1. Clone Shanom
+git clone https://github.com/JonusNattapong/shanom.git
+cd shanom
 
 # 2. Configure credentials (choose one method)
 
@@ -190,26 +197,26 @@ pnpm install
 pnpm build
 
 # 4. Run a pentest
-./shannon start -u https://your-app.com -r /path/to/your-repo
+./shanom start -u https://your-app.com -r /path/to/your-repo
 ```
 
-Shannon will build the worker image locally, start the infrastructure, and launch an ephemeral worker container for the scan.
+Shanom will build the worker image locally, start the infrastructure, and launch an ephemeral worker container for the scan.
 
 ### Prepare Your Repository
 
-Shannon can scan any repository on your machine. Pass an absolute or relative path with `-r`.
+Shanom can scan any repository on your machine. Pass an absolute or relative path with `-r`.
 
 Examples:
 
 ```bash
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon start -u https://example.com -r ./relative/path
+./shanom start -u https://example.com -r ./relative/path
 ```
 
 </details>
@@ -219,8 +226,8 @@ npx @keygraph/shannon start -u https://example.com -r /path/to/repo
 #### Monitoring Progress
 
 ```bash
-npx @keygraph/shannon logs <workspace>
-npx @keygraph/shannon status
+npx @keygraph/shanom logs <workspace>
+npx @keygraph/shanom status
 ```
 
 Open the Temporal Web UI for detailed monitoring:
@@ -233,26 +240,26 @@ open http://localhost:8233
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon logs <workspace>
-./shannon status
+./shanom logs <workspace>
+./shanom status
 ```
 
 </details>
 
-#### Stopping Shannon
+#### Stopping Shanom
 
 ```bash
-npx @keygraph/shannon stop
-npx @keygraph/shannon stop --clean
-npx @keygraph/shannon uninstall
+npx @keygraph/shanom stop
+npx @keygraph/shanom stop --clean
+npx @keygraph/shanom uninstall
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon stop
-./shannon stop --clean
+./shanom stop
+./shanom stop --clean
 ```
 
 </details>
@@ -261,19 +268,19 @@ npx @keygraph/shannon uninstall
 
 ```bash
 # Basic pentest
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo
 
 # With a configuration file
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -c /path/to/my-config.yaml
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -c /path/to/my-config.yaml
 
 # Custom output directory
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -o ./my-reports
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -o ./my-reports
 
 # Named workspace
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -w q1-audit
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -w q1-audit
 
 # List all workspaces
-npx @keygraph/shannon workspaces
+npx @keygraph/shanom workspaces
 ```
 
 <details>
@@ -281,66 +288,66 @@ npx @keygraph/shannon workspaces
 
 ```bash
 # Basic pentest
-./shannon start -u https://example.com -r /path/to/repo
+./shanom start -u https://example.com -r /path/to/repo
 
 # With a configuration file
-./shannon start -u https://example.com -r /path/to/repo -c /path/to/my-config.yaml
+./shanom start -u https://example.com -r /path/to/repo -c /path/to/my-config.yaml
 
 # Custom output directory
-./shannon start -u https://example.com -r /path/to/repo -o ./my-reports
+./shanom start -u https://example.com -r /path/to/repo -o ./my-reports
 
 # Named workspace
-./shannon start -u https://example.com -r /path/to/repo -w q1-audit
+./shanom start -u https://example.com -r /path/to/repo -w q1-audit
 
 # List all workspaces
-./shannon workspaces
+./shanom workspaces
 
 # Rebuild worker image
-./shannon build --no-cache
+./shanom build --no-cache
 ```
 
 </details>
 
 ### Workspaces and Resuming
 
-Shannon supports **workspaces** that allow you to resume interrupted or failed runs without re-running completed agents.
+Shanom supports **workspaces** that allow you to resume interrupted or failed runs without re-running completed agents.
 
 **How it works:**
 
-- Every run creates a workspace (auto-named by default, for example `example-com_shannon-1771007534808`)
-- Workspaces are stored in `./workspaces/` (local mode) or `~/.shannon/workspaces/` (npx mode)
+- Every run creates a workspace (auto-named by default, for example `example-com_shanom-1771007534808`)
+- Workspaces are stored in `./workspaces/` (local mode) or `~/.shanom/workspaces/` (npx mode)
 - Use `-w <name>` to give your run a custom name for easier reference
-- To resume any run, pass its workspace name via `-w` — Shannon detects which agents completed successfully and picks up where it left off
+- To resume any run, pass its workspace name via `-w` — Shanom detects which agents completed successfully and picks up where it left off
 - Each agent's progress is checkpointed via git commits, so resumed runs start from a clean, validated state
 
 ```bash
 # Start with a named workspace
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -w my-audit
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -w my-audit
 
 # Resume the same workspace (skips completed agents)
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -w my-audit
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -w my-audit
 
 # Resume an auto-named workspace from a previous run
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -w example-com_shannon-1771007534808
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -w example-com_shanom-1771007534808
 
 # List all workspaces and their status
-npx @keygraph/shannon workspaces
+npx @keygraph/shanom workspaces
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon start -u https://example.com -r /path/to/repo -w my-audit
-./shannon start -u https://example.com -r /path/to/repo -w my-audit
-./shannon start -u https://example.com -r /path/to/repo -w example-com_shannon-1771007534808
-./shannon workspaces
+./shanom start -u https://example.com -r /path/to/repo -w my-audit
+./shanom start -u https://example.com -r /path/to/repo -w my-audit
+./shanom start -u https://example.com -r /path/to/repo -w example-com_shanom-1771007534808
+./shanom workspaces
 ```
 
 </details>
 
 > [!NOTE]
-> The `URL` must match the original workspace URL when resuming. Shannon will reject mismatched URLs to prevent cross-target contamination.
+> The `URL` must match the original workspace URL when resuming. Shanom will reject mismatched URLs to prevent cross-target contamination.
 
 ### Credentials and Configuration
 
@@ -354,7 +361,7 @@ npx @keygraph/shannon workspaces
 **npx mode** uses TOML instead of `.env`:
 
 1. **Environment variables** - `export ANTHROPIC_API_KEY=...`
-2. **`~/.shannon/config.toml`** - created by `npx @keygraph/shannon setup`
+2. **`~/.shanom/config.toml`** - created by `npx @keygraph/shanom setup`
 
 Environment variables always win, so you can override saved config for a single session without editing files.
 
@@ -408,14 +415,14 @@ rules:
 Run with:
 
 ```bash
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo -c ./my-app-config.yaml
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo -c ./my-app-config.yaml
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon start -u https://example.com -r /path/to/repo -c ./my-app-config.yaml
+./shanom start -u https://example.com -r /path/to/repo -c ./my-app-config.yaml
 ```
 
 </details>
@@ -438,11 +445,11 @@ pipeline:
 
 ### AWS Bedrock
 
-Shannon also supports [Amazon Bedrock](https://aws.amazon.com/bedrock/) instead of using an Anthropic API key.
+Shanom also supports [Amazon Bedrock](https://aws.amazon.com/bedrock/) instead of using an Anthropic API key.
 
 #### Quick Setup
 
-Run `npx @keygraph/shannon setup` and select **AWS Bedrock**. The wizard will prompt for your region, bearer token, and model IDs.
+Run `npx @keygraph/shanom setup` and select **AWS Bedrock**. The wizard will prompt for your region, bearer token, and model IDs.
 
 Or export env vars directly:
 
@@ -469,17 +476,17 @@ ANTHROPIC_LARGE_MODEL=us.anthropic.claude-opus-4-6
 
 </details>
 
-Shannon uses three model tiers: **small** (`claude-haiku-4-5-20251001`) for summarization, **medium** (`claude-sonnet-4-6`) for security analysis, and **large** (`claude-opus-4-6`) for deep reasoning. Set `ANTHROPIC_SMALL_MODEL`, `ANTHROPIC_MEDIUM_MODEL`, and `ANTHROPIC_LARGE_MODEL` to the Bedrock model IDs for your region.
+Shanom uses three model tiers: **small** (`claude-haiku-4-5-20251001`) for summarization, **medium** (`claude-sonnet-4-6`) for security analysis, and **large** (`claude-opus-4-6`) for deep reasoning. Set `ANTHROPIC_SMALL_MODEL`, `ANTHROPIC_MEDIUM_MODEL`, and `ANTHROPIC_LARGE_MODEL` to the Bedrock model IDs for your region.
 
 ### Google Vertex AI
 
-Shannon also supports [Google Vertex AI](https://cloud.google.com/vertex-ai) instead of using an Anthropic API key.
+Shanom also supports [Google Vertex AI](https://cloud.google.com/vertex-ai) instead of using an Anthropic API key.
 
 Create a service account with the `roles/aiplatform.user` role in the [GCP Console](https://console.cloud.google.com/iam-admin/serviceaccounts), then download a JSON key file.
 
 #### Quick Setup
 
-Run `npx @keygraph/shannon setup` and select **Google Vertex AI**. The wizard will prompt for your region, project ID, service account key file path, and model IDs. The key file is securely copied to `~/.shannon/google-sa-key.json`.
+Run `npx @keygraph/shanom setup` and select **Google Vertex AI**. The wizard will prompt for your region, project ID, service account key file path, and model IDs. The key file is securely copied to `~/.shanom/google-sa-key.json`.
 
 Or export env vars directly:
 
@@ -512,9 +519,9 @@ Set `CLOUD_ML_REGION=global` for global endpoints, or a specific region like `us
 
 ### Custom Base URL
 
-Shannon supports pointing the SDK at any Anthropic-compatible endpoint (proxies, gateways, etc.) via `ANTHROPIC_BASE_URL`.
+Shanom supports pointing the SDK at any Anthropic-compatible endpoint (proxies, gateways, etc.) via `ANTHROPIC_BASE_URL`.
 
-Run `npx @keygraph/shannon setup` and select **Custom Base URL**. The wizard will prompt for your endpoint URL, auth token, and optionally let you override the default model tiers.
+Run `npx @keygraph/shanom setup` and select **Custom Base URL**. The wizard will prompt for your endpoint URL, auth token, and optionally let you override the default model tiers.
 
 Or export env vars directly:
 
@@ -543,13 +550,13 @@ ANTHROPIC_LARGE_MODEL=claude-opus-4-6
 
 ### [EXPERIMENTAL - UNSUPPORTED] Router Mode (Alternative Providers)
 
-Shannon can experimentally route requests through alternative AI providers using claude-code-router. This mode is not officially supported and is intended primarily for:
+Shanom can experimentally route requests through alternative AI providers using claude-code-router. This mode is not officially supported and is intended primarily for:
 
-- **Model experimentation** — try Shannon with GPT-5.2 or Gemini 3-family models
+- **Model experimentation** — try Shanom with GPT-5.2 or Gemini 3-family models
 
 #### Quick Setup
 
-Run `npx @keygraph/shannon setup` and select **Router**. The wizard will prompt you to choose a provider (OpenAI or OpenRouter), enter your API key, and select a default model.
+Run `npx @keygraph/shanom setup` and select **Router**. The wizard will prompt you to choose a provider (OpenAI or OpenRouter), enter your API key, and select a default model.
 
 Or export env vars directly:
 
@@ -559,7 +566,7 @@ export ROUTER_DEFAULT=openai,gpt-5.2  # provider,model format
 ```
 
 ```bash
-npx @keygraph/shannon start -u https://example.com -r /path/to/repo --router
+npx @keygraph/shanom start -u https://example.com -r /path/to/repo --router
 ```
 
 <details>
@@ -573,7 +580,7 @@ ROUTER_DEFAULT=openai,gpt-5.2
 ```
 
 ```bash
-./shannon start -u https://example.com -r /path/to/repo --router
+./shanom start -u https://example.com -r /path/to/repo --router
 ```
 
 </details>
@@ -587,7 +594,7 @@ ROUTER_DEFAULT=openai,gpt-5.2
 
 #### Disclaimer
 
-This feature is experimental and unsupported. Output quality depends heavily on the model. Shannon is built on top of the Anthropic Agent SDK and is optimized and primarily tested with Anthropic Claude models. Alternative providers may produce inconsistent results (including failing early phases like Recon) depending on the model and routing setup.
+This feature is experimental and unsupported. Output quality depends heavily on the model. Shanom is built on top of the Anthropic Agent SDK and is optimized and primarily tested with Anthropic Claude models. Alternative providers may produce inconsistent results (including failing early phases like Recon) depending on the model and routing setup.
 
 ### Platform-Specific Instructions
 
@@ -595,7 +602,7 @@ This feature is experimental and unsupported. Output quality depends heavily on 
 
 *Native (Git Bash):*
 
-Install [Git for Windows](https://git-scm.com/install/windows) and run Shannon from **Git Bash** with Docker Desktop installed. Both `npx @keygraph/shannon` and local clone mode are supported.
+Install [Git for Windows](https://git-scm.com/install/windows) and run Shanom from **Git Bash** with Docker Desktop installed. Both `npx @keygraph/shanom` and local clone mode are supported.
 
 *WSL2 (Recommended):*
 
@@ -620,23 +627,23 @@ See [WSL basic commands](https://learn.microsoft.com/en-us/windows/wsl/basic-com
 
 **Step 2: Install Docker Desktop on Windows** and enable **WSL2 backend** under *Settings > General > Use the WSL 2 based engine*.
 
-**Step 3: Run Shannon inside WSL** using either flow.
+**Step 3: Run Shanom inside WSL** using either flow.
 
 **npx inside WSL:**
 
 ```bash
-npx @keygraph/shannon setup
-npx @keygraph/shannon start -u https://your-app.com -r /path/to/your-repo
+npx @keygraph/shanom setup
+npx @keygraph/shanom start -u https://your-app.com -r /path/to/your-repo
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-git clone https://github.com/KeygraphHQ/shannon.git
-cd shannon
+git clone https://github.com/JonusNattapong/shanom.git
+cd shanom
 cp .env.example .env  # Edit with your API key
-./shannon start -u https://your-app.com -r /path/to/your-repo
+./shanom start -u https://your-app.com -r /path/to/your-repo
 ```
 
 </details>
@@ -658,21 +665,21 @@ Works out of the box with Docker Desktop installed.
 Docker containers cannot reach `localhost` on your host machine. Use `host.docker.internal` in place of `localhost`:
 
 ```bash
-npx @keygraph/shannon start -u http://host.docker.internal:3000 -r /path/to/repo
+npx @keygraph/shanom start -u http://host.docker.internal:3000 -r /path/to/repo
 ```
 
 <details>
 <summary>Clone and Build command equivalents</summary>
 
 ```bash
-./shannon start -u http://host.docker.internal:3000 -r /path/to/repo
+./shanom start -u http://host.docker.internal:3000 -r /path/to/repo
 ```
 
 </details>
 
 ### Output and Results
 
-All results are saved to the workspaces directory: `./workspaces/` (local mode) or `~/.shannon/workspaces/` (npx mode). Use `-o <path>` to copy deliverables to a custom output directory after the run completes.
+All results are saved to the workspaces directory: `./workspaces/` (local mode) or `~/.shanom/workspaces/` (npx mode). Use `-o <path>` to copy deliverables to a custom output directory after the run completes.
 
 Output structure:
 
@@ -683,7 +690,16 @@ workspaces/{hostname}_{sessionId}/
 ├── agents/               # Per-agent execution logs
 ├── prompts/              # Prompt snapshots for reproducibility
 └── deliverables/
-    └── comprehensive_security_assessment_report.md   # Final comprehensive security report
+    ├── comprehensive_security_assessment_report.md   # Main report
+    ├── cpg/
+    │   ├── cpg_security_analysis.md                # CPG findings
+    │   └── cpg_findings.json                       # Structured data
+    ├── correlation/
+    │   ├── correlation_report.md                   # Unified findings
+    │   └── unified_findings.sarif                  # SARIF format
+    ├── technical_pentest_report.md                  # Technical details
+    ├── remediation_guidance_report.md              # Fix instructions
+    └── board_executive_security_report.md            # Executive summary
 ```
 
 ---
@@ -705,7 +721,7 @@ Sample penetration test reports from industry-standard vulnerable applications:
 - IDOR vulnerabilities enabling access to other users' data and shopping carts
 - SSRF enabling internal network reconnaissance
 
-[View Complete Report →](sample-reports/shannon-report-juice-shop.md)
+[View Complete Report →](sample-reports/shanom-report-juice-shop.md)
 
 ---
 
@@ -722,7 +738,7 @@ Sample penetration test reports from industry-standard vulnerable applications:
 - Privilege escalation via Mass Assignment in the user profile update function
 - Zero false positives for XSS (correctly confirmed robust XSS defenses)
 
-[View Complete Report →](sample-reports/shannon-report-capital-api.md)
+[View Complete Report →](sample-reports/shanom-report-capital-api.md)
 
 ---
 
@@ -739,62 +755,80 @@ Sample penetration test reports from industry-standard vulnerable applications:
 - SSRF attack forwarding internal authentication tokens to an external service
 - Zero false positives for XSS (correctly identified robust XSS defenses)
 
-[View Complete Report →](sample-reports/shannon-report-crapi.md)
+[View Complete Report →](sample-reports/shanom-report-crapi.md)
 
 ---
 
 ## Benchmark
 
-Shannon Lite scored **96.15% (100/104 exploits)** on a hint-free, source-aware variant of the XBOW security benchmark.
+Shanom Lite scored **96.15% (100/104 exploits)** on a hint-free, source-aware variant of the XBOW security benchmark.
 
-**[Full results with detailed agent logs and per-challenge pentest reports →](https://github.com/KeygraphHQ/xbow-validation-benchmarks/blob/main/xben-benchmark-results/)**
+**[Full results with detailed agent logs and per-challenge pentest reports →](https://github.com/JonusNattapong/xbow-validation-benchmarks/blob/main/xben-benchmark-results/)**
 
 ---
 
 ## Architecture
 
-Shannon uses a multi-agent architecture that combines white-box source code analysis with dynamic exploitation across five phases:
+Shanom uses a multi-agent architecture that combines white-box source code analysis with dynamic exploitation across five phases:
 
 ```
-        ┌──────────────────────┐
-        │   Pre-Reconnaissance │
-        │  (nmap, subfinder,   │
-        │  whatweb, code scan) │
-        └──────────┬───────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │   Reconnaissance     │
-        │  (attack surface     │
-        │   mapping)           │
-        └──────────┬───────────┘
-                   │
-                   ▼
-        ┌──────────┴───────────┐
-        │          │           │
-        ▼          ▼           ▼
-  ┌───────────┐ ┌───────────┐ ┌───────────┐
-  │ Vuln      │ │ Vuln      │ │   ...     │
-  │(Injection)│ │  (XSS)    │ │           │
-  └─────┬─────┘ └─────┬─────┘ └─────┬─────┘
-        │              │             │
-        ▼              ▼             ▼
-  ┌───────────┐ ┌───────────┐ ┌───────────┐
-  │ Exploit   │ │ Exploit   │ │   ...     │
-  │(Injection)│ │  (XSS)    │ │           │
-  └─────┬─────┘ └─────┬─────┘ └─────┬─────┘
-        │              │             │
-        └──────┬───────┴─────────────┘
-               │
-               ▼
-        ┌──────────────────────┐
-        │      Reporting       │
+        ┌──────────────────────────────────────────────────┐
+        │         STATIC ANALYSIS (CPG Engine)             │
+        ├──────────────────────────────────────────────────┤
+        │  ┌──────────────┐  ┌──────────────┐  ┌─────────┐ │
+        │  │ Data Flow    │  │ Point Issues │  │ Secrets │ │
+        │  │ Analysis     │  │ Detection    │  │ Detection│ │
+        │  └──────┬───────┘  └──────┬───────┘  └────┬────┘ │
+        │         │                │                │      │
+        │         └────────────────┴────────────────┘      │
+        │                          │                       │
+        │                    ┌─────▼─────┐                │
+        │                    │ CPG Graph │                │
+        │                    └─────┬─────┘                │
+        └──────────────────────────┼──────────────────────┘
+                                   │
+        ┌──────────────────────────┼──────────────────────┐
+        │   Pre-Reconnaissance   │                      │
+        │  (nmap, subfinder,     │                      │
+        │   whatweb, CPG scan)   │                      │
+        └──────────┬─────────────┘                      │
+                   │                                    │
+                   ▼                                    │
+        ┌──────────────────────┐                       │
+        │   Reconnaissance     │                       │
+        │  (attack surface     │                       │
+        │   mapping)           │                       │
+        └──────────┬───────────┘                       │
+                   │                                    │
+                   ▼                                    ▼
+        ┌──────────┴───────────┐         ┌──────────────────────┐
+        │          │           │         │ Static-Dynamic     │
+        ▼          ▼           ▼         │ Correlation        │
+  ┌───────────┐ ┌───────────┐ ┌───────────┐  (validate with  │
+  │ Vuln      │ │ Vuln      │ │   ...     │   PoC exploits)   │
+  │(Injection)│ │  (XSS)    │ │           │                   │
+  └─────┬─────┘ └─────┬─────┘ └─────┬─────┘                   │
+        │              │             │                       │
+        ▼              ▼             ▼                       │
+  ┌───────────┐ ┌───────────┐ ┌───────────┐                   │
+  │ Exploit   │ │ Exploit   │ │   ...     │                   │
+  │(Injection)│ │  (XSS)    │ │           │                   │
+  └─────┬─────┘ └─────┬─────┘ └─────┬─────┘                   │
+        │              │             │                       │
+        └──────┬───────┴─────────────┘                     │
+               │                                            │
+               ▼                                            │
+        ┌──────────────────────┐                           │
+        │      Reporting       │◄──────────────────────────┘
+        │  (Technical +       │
+        │   Remediation +     │
+        │   Executive)         │
         └──────────────────────┘
 ```
 
 ### Architectural Overview
 
-Shannon uses Anthropic's Claude Agent SDK as its reasoning engine within a multi-agent architecture. The system combines white-box source code analysis with black-box dynamic exploitation, managed by an orchestrator across five phases. The architecture is designed for minimal false positives through a "no exploit, no report" policy.
+Shanom uses Anthropic's Claude Agent SDK as its reasoning engine within a multi-agent architecture. The system combines white-box source code analysis with black-box dynamic exploitation, managed by an orchestrator across five phases. The architecture is designed for minimal false positives through a "no exploit, no report" policy.
 
 Each scan runs in its own ephemeral Docker container (`docker run --rm`) with a per-invocation Temporal task queue, enabling concurrent scans with different target repositories.
 
@@ -806,7 +840,7 @@ External scanning using nmap, subfinder, and whatweb to fingerprint the target's
 
 #### **Phase 2: Reconnaissance**
 
-Builds a comprehensive attack surface map from the pre-recon findings. Shannon performs live application exploration via browser automation to correlate code-level insights with real-world behavior, producing a detailed map of all entry points, API endpoints, and authentication mechanisms.
+Builds a comprehensive attack surface map from the pre-recon findings. Shanom performs live application exploration via browser automation to correlate code-level insights with real-world behavior, producing a detailed map of all entry points, API endpoints, and authentication mechanisms.
 
 #### **Phase 3: Vulnerability Analysis**
 
@@ -823,46 +857,46 @@ The final phase compiles all validated findings into a professional, actionable 
 
 ## Coverage and Roadmap
 
-For detailed information about Shannon's security testing coverage and development roadmap, see our [Coverage and Roadmap](./COVERAGE.md) documentation.
+For detailed information about Shanom's security testing coverage and development roadmap, see our [Coverage and Roadmap](./COVERAGE.md) documentation.
 
 ## Disclaimers
 
 ### Important Usage Guidelines & Disclaimers
 
-Please review the following guidelines carefully before using Shannon (Lite). As a user, you are responsible for your actions and assume all liability.
+Please review the following guidelines carefully before using Shanom (Lite). As a user, you are responsible for your actions and assume all liability.
 
 #### **1. Potential for Mutative Effects & Environment Selection**
 
 This is not a passive scanner. The exploitation agents are designed to **actively execute attacks** to confirm vulnerabilities. This process can have mutative effects on the target application and its data.
 
 > [!WARNING]
-> **DO NOT run Shannon on production environments.**
+> **DO NOT run Shanom on production environments.**
 >
 > - It is intended exclusively for use on sandboxed, staging, or local development environments where data integrity is not a concern.
 > - Potential mutative effects include, but are not limited to: creating new users, modifying or deleting data, compromising test accounts, and triggering unintended side effects from injection attacks.
 
 #### **2. Legal & Ethical Use**
 
-Shannon is designed for legitimate security auditing purposes only.
+Shanom is designed for legitimate security auditing purposes only.
 
 > [!CAUTION]
-> **You must have explicit, written authorization** from the owner of the target system before running Shannon.
+> **You must have explicit, written authorization** from the owner of the target system before running Shanom.
 >
-> Unauthorized scanning and exploitation of systems you do not own is illegal and can be prosecuted under laws such as the Computer Fraud and Abuse Act (CFAA). Keygraph is not responsible for any misuse of Shannon.
+> Unauthorized scanning and exploitation of systems you do not own is illegal and can be prosecuted under laws such as the Computer Fraud and Abuse Act (CFAA). Keygraph is not responsible for any misuse of Shanom.
 
 #### **3. LLM & Automation Caveats**
 
 - **Verification is Required**: While significant engineering has gone into our "proof-by-exploitation" methodology to eliminate false positives, the underlying LLMs can still generate hallucinated or weakly-supported content in the final report. **Human oversight is essential** to validate the legitimacy and severity of all reported findings.
-- **Comprehensiveness**: The analysis in Shannon Lite may not be exhaustive due to the inherent limitations of LLM context windows. For a more comprehensive, graph-based analysis of your entire codebase, **Shannon Pro** leverages its advanced data flow analysis engine to ensure deeper and more thorough coverage.
+- **Comprehensiveness**: The analysis in Shanom Lite may not be exhaustive due to the inherent limitations of LLM context windows. For a more comprehensive, graph-based analysis of your entire codebase, **Shanom Pro** leverages its advanced data flow analysis engine to ensure deeper and more thorough coverage.
 
 #### **4. Scope of Analysis**
 
-- **Targeted Vulnerabilities**: The current version of Shannon Lite specifically targets the following classes of *exploitable* vulnerabilities:
+- **Targeted Vulnerabilities**: The current version of Shanom Lite specifically targets the following classes of *exploitable* vulnerabilities:
   - Broken Authentication & Authorization
   - Injection
   - Cross-Site Scripting (XSS)
   - Server-Side Request Forgery (SSRF)
-- **What Shannon Lite Does Not Cover**: This list is not exhaustive of all potential security risks. Shannon Lite's "proof-by-exploitation" model means it will not report on issues it cannot actively exploit, such as vulnerable third-party libraries or insecure configurations. These types of deep static-analysis findings are a core focus of the advanced analysis engine in **Shannon Pro**.
+- **What Shanom Lite Does Not Cover**: This list is not exhaustive of all potential security risks. Shanom Lite's "proof-by-exploitation" model means it will not report on issues it cannot actively exploit, such as vulnerable third-party libraries or insecure configurations. These types of deep static-analysis findings are a core focus of the advanced analysis engine in **Shanom Pro**.
 
 #### **5. Cost & Performance**
 
@@ -871,22 +905,22 @@ Shannon is designed for legitimate security auditing purposes only.
 
 #### **6. Windows Antivirus False Positives**
 
-Windows Defender may flag files in `xben-benchmark-results/` or `deliverables/` as malware. These are false positives caused by exploit code in the reports. Add an exclusion for the Shannon directory in Windows Defender, or use Docker/WSL2.
+Windows Defender may flag files in `xben-benchmark-results/` or `deliverables/` as malware. These are false positives caused by exploit code in the reports. Add an exclusion for the Shanom directory in Windows Defender, or use Docker/WSL2.
 
 #### **7. Security Considerations**
 
-Shannon Lite is designed for scanning repositories and applications you own or have explicit permission to test. Do not point it at untrusted or adversarial codebases. Like any AI-powered tool that reads source code, Shannon Lite is susceptible to prompt injection from content in the scanned repository.
+Shanom Lite is designed for scanning repositories and applications you own or have explicit permission to test. Do not point it at untrusted or adversarial codebases. Like any AI-powered tool that reads source code, Shanom Lite is susceptible to prompt injection from content in the scanned repository.
 
 
 ## License
 
-Shannon Lite is released under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
+Shanom Lite is released under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
 
-Shannon is open source (AGPL v3). This license allows you to:
+Shanom is open source (AGPL v3). This license allows you to:
 - Use it freely for all internal security testing.
 - Modify the code privately for internal use without sharing your changes.
 
-The AGPL's sharing requirements primarily apply to organizations offering Shannon as a public or managed service (such as a SaaS platform). In those specific cases, any modifications made to the core software must be open-sourced.
+The AGPL's sharing requirements primarily apply to organizations offering Shanom as a public or managed service (such as a SaaS platform). In those specific cases, any modifications made to the core software must be open-sourced.
 
 
 ## Community & Support
@@ -896,19 +930,19 @@ The AGPL's sharing requirements primarily apply to organizations offering Shanno
 **1:1 Office Hours** — Thursdays, two time zones
 Book a free 15-min session for hands-on help with bugs, deployments, or config questions.
 → US/EU: 10:00 AM PT  |  Asia: 2:00 PM IST
-→ [Book a slot](https://cal.com/george-flores-keygraph/shannon-community-office-hours)
+→ [Book a slot](https://cal.com/george-flores-keygraph/shanom-community-office-hours)
 
-[Join our Discord](https://discord.gg/cmctpMBXwE) to ask questions, share feedback, and connect with other Shannon users.
+[Join our Discord](https://discord.gg/cmctpMBXwE) to ask questions, share feedback, and connect with other Shanom users.
 
 **Contributing:** At this time, we're not accepting external code contributions (PRs).  
 Issues are welcome for bug reports and feature requests.
 
-- **Report bugs** via [GitHub Issues](https://github.com/KeygraphHQ/shannon/issues)
-- **Suggest features** in [Discussions](https://github.com/KeygraphHQ/shannon/discussions)
+- **Report bugs** via [GitHub Issues](https://github.com/JonusNattapong/shanom/issues)
+- **Suggest features** in [Discussions](https://github.com/JonusNattapong/shanom/discussions)
 
 ### Stay Connected
 
-- **Twitter**: [@KeygraphHQ](https://twitter.com/KeygraphHQ)
+- **Twitter**: [@JonusNattapong](https://twitter.com/JonusNattapong)
 - **LinkedIn**: [Keygraph](https://linkedin.com/company/keygraph)
 - **Website**: [keygraph.io](https://keygraph.io)
 
@@ -916,17 +950,17 @@ Issues are welcome for bug reports and feature requests.
 
 ## Get in Touch
 
-### Shannon Pro
+### Shanom Pro
 
-Shannon Pro is Keygraph's all-in-one AppSec platform. For organizations that need unified SAST, SCA, and autonomous pentesting with static-dynamic correlation, CI/CD integration, or self-hosted deployment, see the [Shannon Pro technical overview](./SHANNON-PRO.md).
+Shanom Pro is Keygraph's all-in-one AppSec platform. For organizations that need unified SAST, SCA, and autonomous pentesting with static-dynamic correlation, CI/CD integration, or self-hosted deployment, see the [Shanom Pro technical overview](./SHANNON-PRO.md).
 
 <p align="center">
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-cPZcWjlfBJ3TCT8AaWpf8ztsw3FaHzJE4urr55KdlQs6cQ/viewform?usp=header" target="_blank">
-    <img src="https://img.shields.io/badge/Shannon%20Pro%20Inquiry-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Shannon Pro Inquiry">
+    <img src="https://img.shields.io/badge/Shanom%20Pro%20Inquiry-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Shanom Pro Inquiry">
   </a>
 </p>
 
-**Email**: [shannon@keygraph.io](mailto:shannon@keygraph.io)
+**Email**: [shanom@keygraph.io](mailto:shanom@keygraph.io)
 
 ---
 
