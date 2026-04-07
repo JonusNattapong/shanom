@@ -67,7 +67,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build worker. CLI not needed in Docker
-RUN pnpm --filter @shannon/worker run build
+RUN pnpm --filter @shanom/worker run build
 
 # Production-only deps (pnpm recommends install --prod over prune in monorepos)
 RUN rm -rf node_modules apps/*/node_modules && pnpm install --frozen-lockfile --prod
@@ -168,7 +168,7 @@ RUN chmod +x /app/entrypoint.sh
 # Set environment variables
 ENV NODE_ENV=production
 ENV PATH="/usr/local/bin:$PATH"
-ENV SHANNON_DOCKER=true
+ENV SHANOM_DOCKER=true
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 ENV PLAYWRIGHT_MCP_EXECUTABLE_PATH=/usr/bin/chromium-browser
 ENV npm_config_cache=/tmp/.npm

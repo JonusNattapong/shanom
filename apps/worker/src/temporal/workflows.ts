@@ -1,11 +1,11 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
 // as published by the Free Software Foundation.
 
 /**
- * Temporal workflow for Shannon pentest pipeline.
+ * Temporal workflow for Shanom pentest pipeline.
  *
  * Orchestrates the penetration testing workflow:
  * 1. Pre-Reconnaissance (sequential)
@@ -462,6 +462,48 @@ export async function pentestPipelineWorkflow(input: PipelineInput): Promise<Pip
     } else {
       log.info('Skipping report (already complete)');
       state.completedAgents.push('report');
+    }
+
+    // === Phase 5b: Enhanced Technical Report ===
+    if (!shouldSkip('report-technical')) {
+      state.currentAgent = 'report-technical';
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'technical-start');
+
+      state.agentMetrics['report-technical'] = await a.runTechnicalReportAgent(activityInput);
+      state.completedAgents.push('report-technical');
+
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'technical-complete');
+    } else {
+      log.info('Skipping technical report (already complete)');
+      state.completedAgents.push('report-technical');
+    }
+
+    // === Phase 5c: Remediation Guidance Report ===
+    if (!shouldSkip('report-remediation')) {
+      state.currentAgent = 'report-remediation';
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'remediation-start');
+
+      state.agentMetrics['report-remediation'] = await a.runRemediationReportAgent(activityInput);
+      state.completedAgents.push('report-remediation');
+
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'remediation-complete');
+    } else {
+      log.info('Skipping remediation report (already complete)');
+      state.completedAgents.push('report-remediation');
+    }
+
+    // === Phase 5d: Board Executive Report ===
+    if (!shouldSkip('report-board')) {
+      state.currentAgent = 'report-board';
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'board-start');
+
+      state.agentMetrics['report-board'] = await a.runBoardReportAgent(activityInput);
+      state.completedAgents.push('report-board');
+
+      await a.logPhaseTransition(activityInput, 'enhanced-reporting', 'board-complete');
+    } else {
+      log.info('Skipping board report (already complete)');
+      state.completedAgents.push('report-board');
     }
 
     state.status = 'completed';

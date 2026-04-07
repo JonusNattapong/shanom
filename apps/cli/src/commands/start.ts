@@ -1,8 +1,8 @@
 /**
- * `shannon start` command — launch a pentest scan.
+ * `shanom start` command — launch a pentest scan.
  *
  * Handles both local mode (local build, ./workspaces/, mounted prompts)
- * and npx mode (Docker Hub pull, ~/.shannon/).
+ * and npx mode (Docker Hub pull, ~/.shanom/).
  */
 
 import { execFileSync } from 'node:child_process';
@@ -50,8 +50,8 @@ export async function start(args: StartArgs): Promise<void> {
 
   // 5. Handle router env
   if (useRouter) {
-    process.env.ANTHROPIC_BASE_URL = 'http://shannon-router:3456';
-    process.env.ANTHROPIC_AUTH_TOKEN = 'shannon-router-key';
+    process.env.ANTHROPIC_BASE_URL = 'http://shanom-router:3456';
+    process.env.ANTHROPIC_AUTH_TOKEN = 'shanom-router-key';
   }
 
   // 6. Ensure image (auto-build in dev, pull in npx) and start infra
@@ -60,12 +60,12 @@ export async function start(args: StartArgs): Promise<void> {
 
   // 7. Generate unique task queue and container name
   const suffix = randomSuffix();
-  const taskQueue = `shannon-${suffix}`;
-  const containerName = `shannon-worker-${suffix}`;
+  const taskQueue = `shanom-${suffix}`;
+  const containerName = `shanom-worker-${suffix}`;
 
   // 8. Generate workspace name if not provided
   const workspace =
-    args.workspace ?? `${new URL(args.url).hostname.replace(/[^a-zA-Z0-9-]/g, '-')}_shannon-${Date.now()}`;
+    args.workspace ?? `${new URL(args.url).hostname.replace(/[^a-zA-Z0-9-]/g, '-')}_shanom-${Date.now()}`;
 
   // 9. Create writable overlay directories (mounted over :ro repo paths inside container)
   const workspacePath = path.join(workspacesDir, workspace);
@@ -76,9 +76,9 @@ export async function start(args: StartArgs): Promise<void> {
   }
 
   // 10. Pre-create overlay mount points (Linux :ro mounts can't auto-create them)
-  const shannonDir = path.join(repo.hostPath, '.shannon');
+  const shanomDir = path.join(repo.hostPath, '.shanom');
   for (const dir of ['deliverables', 'scratchpad', '.playwright-cli']) {
-    fs.mkdirSync(path.join(shannonDir, dir), { recursive: true });
+    fs.mkdirSync(path.join(shanomDir, dir), { recursive: true });
   }
 
   const credentialsPath = getCredentialsPath();
@@ -208,7 +208,7 @@ function printInfo(
   repoPath: string,
   workspacesDir: string,
 ): void {
-  const logsCmd = isLocal() ? `./shannon logs ${workspace}` : `npx @keygraph/shannon logs ${workspace}`;
+  const logsCmd = isLocal() ? `./shanom logs ${workspace}` : `npx shanom logs ${workspace}`;
   const reportsPath = path.join(workspacesDir, workspace);
 
   console.log(`  Target:     ${args.url}`);

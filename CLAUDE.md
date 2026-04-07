@@ -8,30 +8,71 @@ AI-powered penetration testing agent for defensive security analysis. Automates 
 
 ### Dual CLI
 
-Shannon supports two CLI modes, auto-detected based on the current working directory:
+Shanom supports two CLI modes, auto-detected based on the current working directory:
 
-| | **npx** (`npx @keygraph/shannon`) | **Local** (`./shannon`) |
+| | **npx** (`npx shanom`) | **Local** (`./shanom`) |
 |---|---|---|
 | **Install** | Zero-install via npm | Clone the repo |
-| **Image** | Pulled from Docker Hub (`keygraph/shannon:latest`) | Built locally (`shannon-worker`) |
-| **State** | `~/.shannon/` | Project directory |
-| **Credentials** | `~/.shannon/config.toml` (via `shn setup`) or env vars | `./.env` |
-| **Config** | `~/.shannon/config.toml` (via `shn setup`) | N/A |
+| **Image** | Pulled from Docker Hub (`shanom:latest`) | Built locally (`shanom-worker`) |
+| **State** | `~/.shanom/` | Project directory |
+| **Credentials** | `~/.shanom/config.toml` (via `shn setup`) or env vars | `./.env` |
+| **Config** | `~/.shanom/config.toml` (via `shn setup`) | N/A |
 | **Prompts** | Bundled in Docker image | Mounted from `./apps/worker/prompts/` (live-editable) |
 
-Mode auto-detection: local mode activates when env var `SHANNON_LOCAL=1` is set by the `./shannon` entry point (`apps/cli/src/mode.ts`). Otherwise npx mode.
+Mode auto-detection: local mode activates when env var `SHANOM_LOCAL=1` is set by the `./shanom` entry point (`apps/cli/src/mode.ts`). Otherwise npx mode.
+
+### AI Providers
+
+Supported authentication methods:
+
+| Provider | Setup | Models |
+|----------|-------|--------|
+| **Anthropic (Claude)** | `ANTHROPIC_API_KEY` or `CLAUDE_CODE_OAUTH_TOKEN` | claude-opus-4-6, claude-sonnet-4-6, claude-haiku-4-5 |
+| **Custom Base URL** | `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN` | Compatible endpoints |
+| **AWS Bedrock** | `CLAUDE_CODE_USE_BEDROCK=1` + `AWS_BEARER_TOKEN_BEDROCK` | Bedrock Claude models |
+| **Google Vertex AI** | `CLAUDE_CODE_USE_VERTEX=1` + `GOOGLE_APPLICATION_CREDENTIALS` | Vertex Claude models |
+| **Router Mode** — Multi-provider gateway |
+| ├─ **OpenAI** | `OPENAI_API_KEY` + `ROUTER_DEFAULT=openai,gpt-5.2` | gpt-5.2, gpt-5-mini |
+| ├─ **OpenRouter** | `OPENROUTER_API_KEY` + `ROUTER_DEFAULT=openrouter,google/gemini-3-flash-preview` | google/gemini-3-flash-preview |
+| └─ **Kilocode** | `KILOCODE_API_KEY` + `ROUTER_DEFAULT=kilocode,anthropic/claude-sonnet-4.6` | anthropic/claude-sonnet-4.6, openai/gpt-5.2, kilo-auto/frontier |
+
+### Using Kilocode
+
+[Kilocode](https://kilo.ai) provides access to frontier coding models through a unified API gateway.
+
+**Setup via `npx shanom setup`:**
+```bash
+npx shanom setup
+# → Select "Router"
+# → Select "Kilocode"  
+# → Enter your Kilocode API key
+# → Choose default model (Claude Sonnet 4.6, Claude Opus 4.6, GPT-5.2, or Kilocode Auto)
+```
+
+**Setup via environment variables:**
+```bash
+export KILOCODE_API_KEY=your-kilocode-api-key
+export ROUTER_DEFAULT=kilocode,anthropic/claude-sonnet-4.6
+./shanom start -u <url> -r <repo>
+```
+
+**Available Kilocode models:**
+- `anthropic/claude-sonnet-4.6` — Recommended for most tasks
+- `anthropic/claude-opus-4.6` — Best for complex analysis
+- `openai/gpt-5.2` — OpenAI's latest model
+- `kilo-auto/frontier` — Auto-selects best available model
 
 ### npx Quick Start
 
 ```bash
 # Configure credentials (interactive wizard)
-npx @keygraph/shannon setup
+npx shanom setup
 
 # Or export env vars directly (non-interactive / CI)
 export ANTHROPIC_API_KEY=your-key
 
 # Run
-npx @keygraph/shannon start -u <url> -r /path/to/repo
+npx shanom start -u <url> -r /path/to/repo
 ```
 
 ### Local (Development) Quick Start
@@ -41,37 +82,37 @@ npx @keygraph/shannon start -u <url> -r /path/to/repo
 echo "ANTHROPIC_API_KEY=your-key" > .env
 
 # Build (auto-runs if image missing)
-./shannon build
+./shanom build
 
 # Run
-./shannon start -u <url> -r my-repo
-./shannon start -u <url> -r my-repo -c ./apps/worker/configs/my-config.yaml
-./shannon start -u <url> -r /any/path/to/repo
+./shanom start -u <url> -r my-repo
+./shanom start -u <url> -r my-repo -c ./apps/worker/configs/my-config.yaml
+./shanom start -u <url> -r /any/path/to/repo
 ```
 
 ### Common Commands
 
 ```bash
 # Setup (npx mode only — one-time credential configuration)
-npx @keygraph/shannon setup
+npx shanom setup
 
 # Workspaces & Resume
-./shannon start -u <url> -r my-repo -w my-audit    # New named workspace
-./shannon start -u <url> -r my-repo -w my-audit    # Resume (same command)
-./shannon workspaces                                 # List all workspaces
+./shanom start -u <url> -r my-repo -w my-audit    # New named workspace
+./shanom start -u <url> -r my-repo -w my-audit    # Resume (same command)
+./shanom workspaces                                 # List all workspaces
 
 # Monitor
-./shannon logs <workspace>            # Tail workflow log
-./shannon status                      # Show running workers
+./shanom logs <workspace>            # Tail workflow log
+./shanom status                      # Show running workers
 # Temporal Web UI: http://localhost:8233
 
 # Stop
-./shannon stop                        # Preserves workflow data
-./shannon stop --clean                # Full cleanup including volumes (confirms first)
+./shanom stop                        # Preserves workflow data
+./shanom stop --clean                # Full cleanup including volumes (confirms first)
 
 # Image management
-./shannon build [--no-cache]          # Local mode: build worker image
-npx @keygraph/shannon uninstall             # npx mode: remove ~/.shannon/ (confirms first)
+./shanom build [--no-cache]          # Local mode: build worker image
+npx shanom uninstall             # npx mode: remove ~/.shanom/ (confirms first)
 
 # Build TypeScript (development)
 pnpm run build                       # Build all packages via Turborepo
@@ -89,31 +130,31 @@ pnpm biome:fix                       # Auto-fix lint, format, and import sorting
 ### Monorepo Layout
 
 ```
-apps/cli/        — @keygraph/shannon (published to npm, bundled with tsdown)
-apps/worker/     — @shannon/worker (private, Temporal worker + pipeline logic)
+apps/cli/        — shanom (published to npm, bundled with tsdown)
+apps/worker/     — @shanom/worker (private, Temporal worker + pipeline logic)
 ```
 
 ### CLI Package (`apps/cli/`)
-Published as `@keygraph/shannon` on npm. Contains only Docker orchestration logic — no Temporal SDK, business logic, or prompts. Bundled with tsdown for single-file ESM output.
+Published as `shanom` on npm. Contains only Docker orchestration logic — no Temporal SDK, business logic, or prompts. Bundled with tsdown for single-file ESM output.
 
 - `apps/cli/src/index.ts` — CLI dispatcher (`setup`, `start`, `stop`, `logs`, `workspaces`, `status`, `build`, `uninstall`, `info`)
-- `apps/cli/src/mode.ts` — Auto-detection: local mode if `SHANNON_LOCAL=1` env var is set
+- `apps/cli/src/mode.ts` — Auto-detection: local mode if `SHANOM_LOCAL=1` env var is set
 - `apps/cli/src/docker.ts` — Compose lifecycle, image pull/build, ephemeral `docker run` worker spawning
-- `apps/cli/src/home.ts` — State directory management (`~/.shannon/` for npx, `./` for local)
+- `apps/cli/src/home.ts` — State directory management (`~/.shanom/` for npx, `./` for local)
 - `apps/cli/src/env.ts` — `.env` loading, TOML fallback (npx only) via `apps/cli/src/config/resolver.ts`, credential validation, env flag building
-- `apps/cli/src/config/resolver.ts` — Cascading config (npx only): env vars → `~/.shannon/config.toml` (parsed with `smol-toml`)
+- `apps/cli/src/config/resolver.ts` — Cascading config (npx only): env vars → `~/.shanom/config.toml` (parsed with `smol-toml`)
 - `apps/cli/src/config/writer.ts` — TOML serialization and secure file persistence (0o600)
 - `apps/cli/src/commands/setup.ts` — Interactive TUI wizard (`@clack/prompts`) for provider credential setup (npx only)
 - `apps/cli/src/paths.ts` — Repo/config path resolution (bare name → `./repos/<name>`, or any absolute/relative path)
 - `apps/cli/src/commands/` — Command handlers
 - `apps/cli/infra/compose.yml` — Bundled Temporal + router compose file for npx mode
 - `apps/cli/tsdown.config.ts` — tsdown bundler config
-- `shannon` — Node.js entry point (`#!/usr/bin/env node`) that delegates to `apps/cli/dist/index.mjs`
+- `shanom` — Node.js entry point (`#!/usr/bin/env node`) that delegates to `apps/cli/dist/index.mjs`
 
 ### Docker Architecture
 Infra (Temporal + router) runs via `docker-compose.yml`. Workers are ephemeral `docker run --rm` containers, one per scan, each with a unique task queue and isolated volume mounts.
 
-- `docker-compose.yml` — Infra only: `shannon-temporal` (port 7233/8233) and `shannon-router` (port 3456, optional via profile). Network: `shannon-net`
+- `docker-compose.yml` — Infra only: `shanom-temporal` (port 7233/8233) and `shanom-router` (port 3456, optional via profile). Network: `shanom-net`
 - `Dockerfile` — 2-stage build (builder + Chainguard Wolfi runtime). Uses pnpm. Entrypoint: `CMD ["node", "apps/worker/dist/temporal/worker.js"]`
 - No `docker-compose.docker.yml` — host gateway handled via `--add-host` flag in CLI
 
@@ -144,7 +185,7 @@ Durable workflow orchestration with crash recovery, queryable progress, intellig
 5. **Reporting** (`report`) — Executive-level security report
 
 ### Supporting Systems
-- **Configuration** — YAML configs in `apps/worker/configs/` with JSON Schema validation (`config-schema.json`). Supports auth settings, MFA/TOTP, and per-app testing parameters. Credential resolution — local mode: env vars → `./.env`; npx mode: env vars → `~/.shannon/config.toml` (via `shn setup`)
+- **Configuration** — YAML configs in `apps/worker/configs/` with JSON Schema validation (`config-schema.json`). Supports auth settings, MFA/TOTP, and per-app testing parameters. Credential resolution — local mode: env vars → `./.env`; npx mode: env vars → `~/.shanom/config.toml` (via `shn setup`)
 - **Prompts** — Per-phase templates in `apps/worker/prompts/` with variable substitution (`{{TARGET_URL}}`, `{{CONFIG_CONTEXT}}`). Shared partials in `apps/worker/prompts/shared/` via `apps/worker/src/services/prompt-manager.ts`
 - **SDK Integration** — Uses `@anthropic-ai/claude-agent-sdk` with `maxTurns: 10_000` and `bypassPermissions` mode. Browser automation via `playwright-cli` with session isolation (`-s=<session>`). TOTP generation via `generate-totp` CLI tool. Login flow template at `apps/worker/prompts/shared/login-instructions.txt` supports form, SSO, API, and basic auth
 - **Audit System** — Crash-safe append-only logging in `workspaces/{hostname}_{sessionId}/`. Tracks session metrics, per-agent logs, prompts, and deliverables. WorkflowLogger (`apps/worker/src/audit/workflow-logger.ts`) provides unified human-readable per-workflow logs, backed by LogStream (`apps/worker/src/audit/log-stream.ts`) shared stream primitive
@@ -223,7 +264,7 @@ Comments must be **timeless** — no references to this conversation, refactorin
 
 ## Key Files
 
-**CLI:** `shannon` (entry point), `apps/cli/src/index.ts` (dispatcher), `apps/cli/src/docker.ts` (orchestration), `apps/cli/src/mode.ts` (auto-detection)
+**CLI:** `shanom` (entry point), `apps/cli/src/index.ts` (dispatcher), `apps/cli/src/docker.ts` (orchestration), `apps/cli/src/mode.ts` (auto-detection)
 
 **Entry Points:** `apps/worker/src/temporal/workflows.ts`, `apps/worker/src/temporal/activities.ts`, `apps/worker/src/temporal/worker.ts`
 
@@ -241,8 +282,8 @@ Package managers are configured with a minimum release age (7 days). Requires pn
 
 - **"Repository not found"** — Pass a bare name (`-r my-repo`) for `./repos/my-repo`, or a path (`-r /path/to/repo`) for any directory
 - **"Temporal not ready"** — Wait for health check or `docker compose logs temporal`
-- **Worker not processing** — Check `docker ps --filter "name=shannon-worker-"`
-- **Reset state** — `./shannon stop --clean`
+- **Worker not processing** — Check `docker ps --filter "name=shanom-worker-"`
+- **Reset state** — `./shanom stop --clean`
 - **Local apps unreachable** — Use `host.docker.internal` instead of `localhost`
 - **Missing tools** — Use `--pipeline-testing` to skip nmap/subfinder/whatweb (graceful degradation)
 - **Container permissions** — On Linux, may need `sudo` for docker commands

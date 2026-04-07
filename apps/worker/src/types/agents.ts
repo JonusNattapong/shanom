@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -26,6 +26,10 @@ export const ALL_AGENTS = [
   'ssrf-exploit',
   'authz-exploit',
   'report',
+  // Enhanced reporting agents
+  'report-technical',
+  'report-remediation',
+  'report-board',
 ] as const;
 
 /**

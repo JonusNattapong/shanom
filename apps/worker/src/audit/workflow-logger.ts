@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -79,7 +79,7 @@ export class WorkflowLogger {
   private async writeHeader(): Promise<void> {
     const header = [
       `================================================================================`,
-      `Shannon Pentest - Workflow Log`,
+      `Shanom Pentest - Workflow Log`,
       `================================================================================`,
       `Workflow ID: ${this.workflowId ?? this.sessionMetadata.id}`,
       `Target URL:  ${this.sessionMetadata.webUrl}`,

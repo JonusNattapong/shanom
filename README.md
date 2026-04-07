@@ -106,7 +106,7 @@ Shanom Pro supports a self-hosted runner model (similar to GitHub Actions self-h
 | **Deployment** | Local CLI | Managed cloud or self-hosted runner |
 | **Multi-Tenancy** | Single user/org | Enterprise multi-tenancy with RBAC |
 
-[Full technical details →](./SHANNON-PRO.md)
+[Full technical details →](./SHANOM-PRO.md)
 
 ## Table of Contents
 

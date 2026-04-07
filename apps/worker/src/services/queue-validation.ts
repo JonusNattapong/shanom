@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -133,8 +133,8 @@ const createPaths = (vulnType: VulnType, sourceDir: string): PathsBase | PathsWi
 
   return Object.freeze({
     vulnType,
-    deliverable: path.join(sourceDir, '.shannon', 'deliverables', config.deliverable),
-    queue: path.join(sourceDir, '.shannon', 'deliverables', config.queue),
+    deliverable: path.join(sourceDir, '.shanom', 'deliverables', config.deliverable),
+    queue: path.join(sourceDir, '.shanom', 'deliverables', config.queue),
     sourceDir,
   });
 };

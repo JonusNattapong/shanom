@@ -1,11 +1,11 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
 // as published by the Free Software Foundation.
 
 /**
- * Temporal activities for Shannon agent execution.
+ * Temporal activities for Shanom agent execution.
  *
  * Each activity wraps service calls with Temporal-specific concerns:
  * - Heartbeat loop (2s interval) to signal worker liveness
@@ -126,7 +126,7 @@ async function runAgentActivity(agentName: AgentName, input: ActivityInput): Pro
     await auditSession.initialize(workflowId);
 
     // 3. Execute agent via service (throws PentestError on failure)
-    const deliverablesPath = path.join(repoPath, '.shannon', 'deliverables');
+    const deliverablesPath = path.join(repoPath, '.shanom', 'deliverables');
     const endResult = await container.agentExecution.executeOrThrow(
       agentName,
       {
@@ -246,6 +246,18 @@ export async function runReportAgent(input: ActivityInput): Promise<AgentMetrics
   return runAgentActivity('report', input);
 }
 
+export async function runTechnicalReportAgent(input: ActivityInput): Promise<AgentMetrics> {
+  return runAgentActivity('report-technical', input);
+}
+
+export async function runRemediationReportAgent(input: ActivityInput): Promise<AgentMetrics> {
+  return runAgentActivity('report-remediation', input);
+}
+
+export async function runBoardReportAgent(input: ActivityInput): Promise<AgentMetrics> {
+  return runAgentActivity('report-board', input);
+}
+
 /**
  * Preflight validation activity.
  *
@@ -318,7 +330,7 @@ export async function runPreflightValidation(input: ActivityInput): Promise<void
  * Idempotent — skips if .git already exists (resume case).
  */
 export async function initDeliverableGit(input: ActivityInput): Promise<void> {
-  const deliverablesPath = path.join(input.repoPath, '.shannon', 'deliverables');
+  const deliverablesPath = path.join(input.repoPath, '.shanom', 'deliverables');
   await fs.mkdir(deliverablesPath, { recursive: true });
 
   // Check for .git directly inside deliverables, not parent repo's .git
@@ -453,7 +465,7 @@ export async function loadResumeState(
     }
 
     const deliverableFilename = AGENTS[agentName].deliverableFilename;
-    const deliverablePath = `${expectedRepoPath}/.shannon/deliverables/${deliverableFilename}`;
+    const deliverablePath = `${expectedRepoPath}/.shanom/deliverables/${deliverableFilename}`;
     const deliverableExists = await fileExists(deliverablePath);
 
     if (!deliverableExists) {
@@ -487,7 +499,7 @@ export async function loadResumeState(
   }
 
   // 5. Find the most recent checkpoint commit
-  const deliverablesPath = path.join(expectedRepoPath, '.shannon', 'deliverables');
+  const deliverablesPath = path.join(expectedRepoPath, '.shanom', 'deliverables');
   const checkpointHash = await findLatestCommit(deliverablesPath, checkpoints);
   const originalWorkflowId = session.session.originalWorkflowId || session.session.id;
 
@@ -541,7 +553,7 @@ export async function restoreGitCheckpoint(
   checkpointHash: string,
   incompleteAgents: AgentName[],
 ): Promise<void> {
-  const deliverablesPath = path.join(repoPath, '.shannon', 'deliverables');
+  const deliverablesPath = path.join(repoPath, '.shanom', 'deliverables');
   const logger = createActivityLogger();
   logger.info(`Restoring deliverables to ${checkpointHash}...`);
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
 // as published by the Free Software Foundation.
 
 /**
- * Combined Temporal worker + client for Shannon pentest pipeline.
+ * Combined Temporal worker + client for Shanom pentest pipeline.
  *
  * Starts a worker on a per-invocation task queue, submits a workflow,
  * waits for the result, and exits. Designed to run as a single ephemeral
@@ -59,7 +59,7 @@ interface CliArgs {
 }
 
 function showUsage(): void {
-  console.log('\nShannon Worker');
+  console.log('\nShanom Worker');
   console.log('Combined worker + client for pentest pipeline\n');
   console.log('Usage:');
   console.log('  node dist/temporal/worker.js <webUrl> <repoPath> --task-queue <name> [options]\n');
@@ -213,7 +213,7 @@ async function terminateExistingWorkflows(client: Client, workspaceName: string)
 async function resolveWorkspace(client: Client, args: CliArgs): Promise<WorkspaceResolution> {
   if (!args.resumeFromWorkspace) {
     const hostname = sanitizeHostname(args.webUrl);
-    const workflowId = `${hostname}_shannon-${Date.now()}`;
+    const workflowId = `${hostname}_shanom-${Date.now()}`;
     return {
       workflowId,
       sessionId: workflowId,
@@ -261,8 +261,8 @@ async function resolveWorkspace(client: Client, args: CliArgs): Promise<Workspac
   console.log(`Workspace: ${workspace}\n`);
 
   // If the workspace name already looks like a CLI-generated ID
-  // (ends with _shannon-<digits>), use it directly to avoid double _shannon- suffixes
-  const workflowId = /_shannon-\d+$/.test(workspace) ? workspace : `${workspace}_shannon-${Date.now()}`;
+  // (ends with _shanom-<digits>), use it directly to avoid double _shanom- suffixes
+  const workflowId = /_shanom-\d+$/.test(workspace) ? workspace : `${workspace}_shanom-${Date.now()}`;
 
   return {
     workflowId,
@@ -360,7 +360,7 @@ async function waitForWorkflowResult(
 // === Deliverables Copy ===
 
 function copyDeliverables(repoPath: string, outputPath: string): void {
-  const deliverablesDir = path.join(repoPath, '.shannon', 'deliverables');
+  const deliverablesDir = path.join(repoPath, '.shanom', 'deliverables');
   if (!fs.existsSync(deliverablesDir)) {
     console.log('No deliverables directory found, skipping copy');
     return;

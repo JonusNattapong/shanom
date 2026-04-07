@@ -1,11 +1,11 @@
 networks:
   default:
-    name: shannon-net
+    name: shanom-net
 
 services:
   temporal:
     image: temporalio/temporal:latest
-    container_name: shannon-temporal
+    container_name: shanom-temporal
     command: ["server", "start-dev", "--db-filename", "/home/temporal/temporal.db", "--ip", "0.0.0.0"]
     ports:
       - "127.0.0.1:7233:7233"   # gRPC
@@ -20,10 +20,10 @@ services:
       start_period: 30s
 
   # Optional: claude-code-router for multi-model support
-  # Start with: ROUTER=true ./shannon start ...
+  # Start with: ROUTER=true ./shanom start ...
   router:
     image: node:20-slim
-    container_name: shannon-router
+    container_name: shanom-router
     profiles: ["router"]  # Only starts when explicitly requested
     command: >
       sh -c "apt-get update && apt-get install -y gettext-base &&

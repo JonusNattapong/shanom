@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -30,6 +30,11 @@ export enum DeliverableType {
   AUTH_EVIDENCE = 'AUTH_EVIDENCE',
   AUTHZ_EVIDENCE = 'AUTHZ_EVIDENCE',
   SSRF_EVIDENCE = 'SSRF_EVIDENCE',
+
+  // Enhanced reporting agents
+  TECHNICAL_REPORT = 'TECHNICAL_REPORT',
+  REMEDIATION_REPORT = 'REMEDIATION_REPORT',
+  BOARD_REPORT = 'BOARD_REPORT',
 }
 
 /**
@@ -48,4 +53,8 @@ export const DELIVERABLE_FILENAMES: Record<DeliverableType, string> = {
   [DeliverableType.AUTH_EVIDENCE]: 'auth_exploitation_evidence.md',
   [DeliverableType.AUTHZ_EVIDENCE]: 'authz_exploitation_evidence.md',
   [DeliverableType.SSRF_EVIDENCE]: 'ssrf_exploitation_evidence.md',
+  // Enhanced reporting deliverables
+  [DeliverableType.TECHNICAL_REPORT]: 'technical_pentest_report.md',
+  [DeliverableType.REMEDIATION_REPORT]: 'remediation_guidance_report.md',
+  [DeliverableType.BOARD_REPORT]: 'board_executive_report.md',
 };

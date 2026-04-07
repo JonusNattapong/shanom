@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -7,7 +7,7 @@
 /**
  * Services Module
  *
- * Exports DI container and service classes for Shannon agent execution.
+ * Exports DI container and service classes for Shanom agent execution.
  * Services are pure domain logic with no Temporal dependencies.
  */
 
@@ -20,3 +20,6 @@ export { Container, getOrCreateContainer, removeContainer } from './container.js
 export { ExploitationCheckerService } from './exploitation-checker.js';
 export { loadPrompt } from './prompt-manager.js';
 export { assembleFinalReport, injectModelIntoReport } from './reporting.js';
+export { CPGAnalysisService } from './cpg-analysis.js';
+export { CorrelationService } from '../correlation/service.js';
+

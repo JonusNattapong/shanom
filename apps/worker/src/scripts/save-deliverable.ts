@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -52,7 +52,7 @@ function parseArgs(argv: string[]): ParsedArgs {
 // === File Operations ===
 
 function saveDeliverableFile(targetDir: string, filename: string, content: string): string {
-  const deliverablesDir = join(targetDir, '.shannon', 'deliverables');
+  const deliverablesDir = join(targetDir, '.shanom', 'deliverables');
   const filepath = join(deliverablesDir, filename);
 
   try {

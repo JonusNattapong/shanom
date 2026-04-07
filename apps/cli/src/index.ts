@@ -1,9 +1,9 @@
 /**
- * Shannon CLI — AI Penetration Testing Framework
+ * Shanom CLI — AI Penetration Testing Framework
  *
  * Unified CLI supporting two modes:
  *   Local mode: Run from cloned repo — builds locally, mounts prompts, uses ./workspaces/
- *   NPX mode:   Run via npx — pulls from Docker Hub, uses ~/.shannon/
+ *   NPX mode:   Run via npx — pulls from Docker Hub, uses ~/.shanom/
  *
  * Mode is auto-detected based on presence of Dockerfile + docker-compose.yml + prompts/
  * in the current working directory.
@@ -37,10 +37,10 @@ function getVersion(): string {
 
 function showHelp(): void {
   const mode = getMode();
-  const prefix = mode === 'local' ? './shannon' : 'npx @keygraph/shannon';
+  const prefix = mode === 'local' ? './shanom' : 'npx shanom';
 
   console.log(`
-Shannon - AI Penetration Testing Framework
+Shanom - AI Penetration Testing Framework
 
 Usage:${
     mode === 'local'
@@ -57,7 +57,7 @@ Usage:${
       ? `
   ${prefix} build [--no-cache]                           Build worker image`
       : `
-  ${prefix} uninstall                                    Remove ~/.shannon/ and all data`
+  ${prefix} uninstall                                    Remove ~/.shanom/ and all data`
   }
   ${prefix} info                                         Show splash screen
   ${prefix} help                                         Show this help
@@ -81,7 +81,7 @@ ${
     ? `
 State directory: ./workspaces/`
     : `
-State directory: ~/.shannon/`
+State directory: ~/.shanom/`
 }
 Monitor workflows at http://localhost:8233
 `);
@@ -154,14 +154,14 @@ function parseStartArgs(argv: string[]): ParsedStartArgs {
         break;
       default:
         console.error(`Unknown option: ${arg}`);
-        console.error(`Run "${getMode() === 'local' ? './shannon' : 'npx @keygraph/shannon'} help" for usage`);
+        console.error(`Run "${getMode() === 'local' ? './shanom' : 'npx shanom'} help" for usage`);
         process.exit(1);
     }
   }
 
   if (!url || !repo) {
     console.error('ERROR: --url and --repo are required');
-    console.error(`Usage: ${getMode() === 'local' ? './shannon' : 'npx @keygraph/shannon'} start -u <url> -r <path>`);
+    console.error(`Usage: ${getMode() === 'local' ? './shanom' : 'npx shanom'} start -u <url> -r <path>`);
     process.exit(1);
   }
 
@@ -194,7 +194,7 @@ switch (command) {
     const workspaceId = args[1];
     if (!workspaceId) {
       console.error('ERROR: Workspace ID is required');
-      console.error(`Usage: ${getMode() === 'local' ? './shannon' : 'npx @keygraph/shannon'} logs <workspace>`);
+      console.error(`Usage: ${getMode() === 'local' ? './shanom' : 'npx shanom'} logs <workspace>`);
       process.exit(1);
     }
     logs(workspaceId);

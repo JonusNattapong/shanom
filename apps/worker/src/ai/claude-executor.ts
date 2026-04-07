@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -72,7 +72,7 @@ async function writeErrorLog(
       },
       duration,
     };
-    const logPath = path.join(sourceDir, '.shannon', 'deliverables', 'error.log');
+    const logPath = path.join(sourceDir, '.shanom', 'deliverables', 'error.log');
     await fs.appendFile(logPath, `${JSON.stringify(errorLog)}\n`);
   } catch {
     // Best-effort error log writing - don't propagate failures
@@ -152,7 +152,7 @@ export async function runClaudePrompt(
   // 3. Build env vars to pass to SDK subprocesses
   const sdkEnv: Record<string, string> = {
     CLAUDE_CODE_MAX_OUTPUT_TOKENS: process.env.CLAUDE_CODE_MAX_OUTPUT_TOKENS || '64000',
-    PLAYWRIGHT_MCP_OUTPUT_DIR: path.join(sourceDir, '.shannon', '.playwright-cli'),
+    PLAYWRIGHT_MCP_OUTPUT_DIR: path.join(sourceDir, '.shanom', '.playwright-cli'),
   };
   const passthroughVars = [
     'ANTHROPIC_API_KEY',

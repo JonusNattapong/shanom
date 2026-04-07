@@ -1,8 +1,8 @@
 /**
- * Shannon state directory management.
+ * Shanom state directory management.
  *
  * Local mode (cloned repo): uses ./workspaces/, ./credentials/
- * NPX mode: uses ~/.shannon/workspaces/, ~/.shannon/
+ * NPX mode: uses ~/.shanom/workspaces/, ~/.shanom/
  */
 
 import fs from 'node:fs';
@@ -10,14 +10,14 @@ import os from 'node:os';
 import path from 'node:path';
 import { getMode } from './mode.js';
 
-const SHANNON_HOME = path.join(os.homedir(), '.shannon');
+const SHANOM_HOME = path.join(os.homedir(), '.shanom');
 
 export function getConfigFile(): string {
-  return path.join(SHANNON_HOME, 'config.toml');
+  return path.join(SHANOM_HOME, 'config.toml');
 }
 
 export function getWorkspacesDir(): string {
-  return getMode() === 'local' ? path.resolve('workspaces') : path.join(SHANNON_HOME, 'workspaces');
+  return getMode() === 'local' ? path.resolve('workspaces') : path.join(SHANOM_HOME, 'workspaces');
 }
 
 /**
@@ -34,19 +34,19 @@ export function getCredentialsPath(): string {
     return path.resolve('credentials', 'google-sa-key.json');
   }
 
-  return path.join(SHANNON_HOME, 'google-sa-key.json');
+  return path.join(SHANOM_HOME, 'google-sa-key.json');
 }
 
 /**
  * Initialize state directories.
  * Local mode: creates ./workspaces/ and ./credentials/
- * NPX mode: creates ~/.shannon/workspaces/
+ * NPX mode: creates ~/.shanom/workspaces/
  */
 export function initHome(): void {
   if (getMode() === 'local') {
     fs.mkdirSync(path.resolve('workspaces'), { recursive: true });
     fs.mkdirSync(path.resolve('credentials'), { recursive: true });
   } else {
-    fs.mkdirSync(path.join(SHANNON_HOME, 'workspaces'), { recursive: true });
+    fs.mkdirSync(path.join(SHANOM_HOME, 'workspaces'), { recursive: true });
   }
 }

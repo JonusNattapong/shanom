@@ -2,21 +2,21 @@
  * `shn setup` — interactive TUI wizard for one-time credential configuration.
  *
  * Walks the user through selecting a provider and entering credentials,
- * then persists everything to ~/.shannon/config.toml with 0o600 permissions.
+ * then persists everything to ~/.shanom/config.toml with 0o600 permissions.
  */
 
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import * as p from '@clack/prompts';
-import { type ShannonConfig, saveConfig } from '../config/writer.js';
+import { type ShanomConfig, saveConfig } from '../config/writer.js';
 
-const SHANNON_HOME = path.join(os.homedir(), '.shannon');
+const SHANOM_HOME = path.join(os.homedir(), '.shanom');
 
 type Provider = 'anthropic' | 'custom_base_url' | 'bedrock' | 'vertex' | 'router';
 
 export async function setup(): Promise<void> {
-  p.intro('Shannon Setup');
+  p.intro('Shanom Setup');
 
   // 1. Select provider
   const provider = await p.select({
@@ -36,12 +36,12 @@ export async function setup(): Promise<void> {
   // 2. Save config
   saveConfig(config);
 
-  const configPath = path.join(SHANNON_HOME, 'config.toml');
+  const configPath = path.join(SHANOM_HOME, 'config.toml');
   p.log.success(`Configuration saved to ${configPath}`);
-  p.outro('Run `npx @keygraph/shannon start` to begin a scan.');
+  p.outro('Run `npx shanom start` to begin a scan.');
 }
 
-async function setupProvider(provider: Provider): Promise<ShannonConfig> {
+async function setupProvider(provider: Provider): Promise<ShanomConfig> {
   switch (provider) {
     case 'anthropic':
       return setupAnthropic();
@@ -58,7 +58,7 @@ async function setupProvider(provider: Provider): Promise<ShannonConfig> {
 
 // === Provider Setup Flows ===
 
-async function setupAnthropic(): Promise<ShannonConfig> {
+async function setupAnthropic(): Promise<ShanomConfig> {
   const authMethod = await p.select({
     message: 'Authentication method',
     options: [
@@ -68,7 +68,7 @@ async function setupAnthropic(): Promise<ShannonConfig> {
   });
   if (p.isCancel(authMethod)) return cancelAndExit();
 
-  const config: ShannonConfig = {};
+  const config: ShanomConfig = {};
 
   if (authMethod === 'oauth') {
     const token = await promptSecret('Enter your OAuth token');
@@ -116,7 +116,7 @@ async function setupAnthropic(): Promise<ShannonConfig> {
   return config;
 }
 
-async function setupCustomBaseUrl(): Promise<ShannonConfig> {
+async function setupCustomBaseUrl(): Promise<ShanomConfig> {
   const baseUrl = await p.text({
     message: 'Endpoint URL',
     placeholder: 'https://your-proxy.example.com',
@@ -134,7 +134,7 @@ async function setupCustomBaseUrl(): Promise<ShannonConfig> {
 
   const authToken = await promptSecret('Enter the auth token for the custom endpoint');
 
-  const config: ShannonConfig = {
+  const config: ShanomConfig = {
     custom_base_url: { base_url: baseUrl, auth_token: authToken },
   };
 
@@ -176,7 +176,7 @@ async function setupCustomBaseUrl(): Promise<ShannonConfig> {
   return config;
 }
 
-async function setupBedrock(): Promise<ShannonConfig> {
+async function setupBedrock(): Promise<ShanomConfig> {
   const region = await p.text({
     message: 'AWS Region',
     placeholder: 'us-east-1',
@@ -213,7 +213,7 @@ async function setupBedrock(): Promise<ShannonConfig> {
   };
 }
 
-async function setupVertex(): Promise<ShannonConfig> {
+async function setupVertex(): Promise<ShanomConfig> {
   // 1. Collect region and project ID
   const region = await p.text({
     message: 'Google Cloud region',
@@ -241,9 +241,9 @@ async function setupVertex(): Promise<ShannonConfig> {
   });
   if (p.isCancel(keySourcePath)) return cancelAndExit();
 
-  // 3. Copy key to ~/.shannon/ and lock permissions
-  const destPath = path.join(SHANNON_HOME, 'google-sa-key.json');
-  fs.mkdirSync(SHANNON_HOME, { recursive: true });
+  // 3. Copy key to ~/.shanom/ and lock permissions
+  const destPath = path.join(SHANOM_HOME, 'google-sa-key.json');
+  fs.mkdirSync(SHANOM_HOME, { recursive: true });
   fs.copyFileSync(keySourcePath, destPath);
   fs.chmodSync(destPath, 0o600);
   p.log.success(`Key copied to ${destPath} (permissions: 0600)`);
@@ -282,18 +282,23 @@ async function setupVertex(): Promise<ShannonConfig> {
   };
 }
 
-async function setupRouter(): Promise<ShannonConfig> {
+async function setupRouter(): Promise<ShanomConfig> {
   const routerProvider = await p.select({
     message: 'Router provider',
     options: [
       { value: 'openai' as const, label: 'OpenAI' },
       { value: 'openrouter' as const, label: 'OpenRouter' },
+      { value: 'kilocode' as const, label: 'Kilocode' },
     ],
   });
   if (p.isCancel(routerProvider)) return cancelAndExit();
 
   const apiKey = await promptSecret(
-    routerProvider === 'openai' ? 'Enter your OpenAI API key' : 'Enter your OpenRouter API key',
+    routerProvider === 'openai' 
+      ? 'Enter your OpenAI API key' 
+      : routerProvider === 'openrouter'
+        ? 'Enter your OpenRouter API key'
+        : 'Enter your Kilocode API key',
   );
 
   let defaultModel: string;
@@ -307,20 +312,34 @@ async function setupRouter(): Promise<ShannonConfig> {
     });
     if (p.isCancel(model)) return cancelAndExit();
     defaultModel = `openai,${model}`;
-  } else {
+  } else if (routerProvider === 'openrouter') {
     const model = await p.select({
       message: 'Default model',
       options: [{ value: 'google/gemini-3-flash-preview' as const, label: 'Google Gemini 3 Flash Preview' }],
     });
     if (p.isCancel(model)) return cancelAndExit();
     defaultModel = `openrouter,${model}`;
+  } else {
+    const model = await p.select({
+      message: 'Default model',
+      options: [
+        { value: 'anthropic/claude-sonnet-4.6' as const, label: 'Claude Sonnet 4.6' },
+        { value: 'anthropic/claude-opus-4.6' as const, label: 'Claude Opus 4.6' },
+        { value: 'openai/gpt-5.2' as const, label: 'GPT-5.2' },
+        { value: 'kilo-auto/frontier' as const, label: 'Kilocode Auto (Frontier)' },
+      ],
+    });
+    if (p.isCancel(model)) return cancelAndExit();
+    defaultModel = `kilocode,${model}`;
   }
 
-  const router: ShannonConfig['router'] = { default: defaultModel };
+  const router: ShanomConfig['router'] = { default: defaultModel };
   if (routerProvider === 'openai') {
     router.openai_key = apiKey;
-  } else {
+  } else if (routerProvider === 'openrouter') {
     router.openrouter_key = apiKey;
+  } else {
+    router.kilocode_key = apiKey;
   }
 
   return { router };

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -19,8 +19,10 @@
 
 import type { SessionMetadata } from '../audit/utils.js';
 import { AgentExecutionService } from './agent-execution.js';
+import { CPGAnalysisService } from './cpg-analysis.js';
 import { ConfigLoaderService } from './config-loader.js';
 import { ExploitationCheckerService } from './exploitation-checker.js';
+import { CorrelationService } from '../correlation/service.js';
 
 /**
  * Dependencies required to create a Container.
@@ -48,6 +50,8 @@ export class Container {
   readonly agentExecution: AgentExecutionService;
   readonly configLoader: ConfigLoaderService;
   readonly exploitationChecker: ExploitationCheckerService;
+  readonly cpgAnalysis: CPGAnalysisService;
+  readonly correlationService: CorrelationService;
 
   constructor(deps: ContainerDependencies) {
     this.sessionMetadata = deps.sessionMetadata;
@@ -56,6 +60,8 @@ export class Container {
     this.configLoader = new ConfigLoaderService();
     this.exploitationChecker = new ExploitationCheckerService();
     this.agentExecution = new AgentExecutionService(this.configLoader);
+    this.cpgAnalysis = new CPGAnalysisService();
+    this.correlationService = new CorrelationService({}, undefined);
   }
 }
 

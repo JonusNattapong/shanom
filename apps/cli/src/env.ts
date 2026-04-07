@@ -2,7 +2,8 @@
  * Environment variable loading and credential validation.
  *
  * Local mode: loads ./.env via dotenv.
- * NPX mode: fills gaps from ~/.shannon/config.toml (no .env).
+ * NPX mode: fills gaps from ~/.shanom/config.toml (no .env).
+ * Exported env vars always take precedence in both modes.
  */
 
 import dotenv from 'dotenv';
@@ -34,7 +35,7 @@ const FORWARD_VARS = [
 /**
  * Load credentials into process.env.
  * Local mode: loads ./.env via dotenv.
- * NPX mode: fills gaps from ~/.shannon/config.toml.
+ * NPX mode: fills gaps from ~/.shanom/config.toml.
  * Exported env vars always take precedence in both modes.
  */
 export function loadEnv(): void {
@@ -49,7 +50,7 @@ export function loadEnv(): void {
  * Build `-e KEY=VALUE` flags for docker run, only for set variables.
  */
 export function buildEnvFlags(): string[] {
-  const flags: string[] = ['-e', 'TEMPORAL_ADDRESS=shannon-temporal:7233'];
+  const flags: string[] = ['-e', 'TEMPORAL_ADDRESS=shanom-temporal:7233'];
 
   for (const key of FORWARD_VARS) {
     const value = process.env[key];
@@ -69,7 +70,7 @@ interface CredentialValidation {
 
 /** Check if router credentials are present in the environment. */
 export function isRouterConfigured(): boolean {
-  return !!(process.env.ROUTER_DEFAULT && (process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY));
+  return !!(process.env.ROUTER_DEFAULT && (process.env.OPENAI_API_KEY || process.env.OPENROUTER_API_KEY || process.env.KILOCODE_API_KEY));
 }
 
 /** Check if a custom Anthropic-compatible base URL is configured. */
@@ -162,7 +163,7 @@ export function validateCredentials(): CredentialValidation {
   const hint =
     getMode() === 'local'
       ? `No credentials found. Set ANTHROPIC_API_KEY in .env or export it.`
-      : `Authentication not configured. Export variables or run 'npx @keygraph/shannon setup'.`;
+      : `Authentication not configured. Export variables or run 'npx shanom setup'.`;
   return {
     valid: false,
     mode: 'api-key',

@@ -1,5 +1,5 @@
 /**
- * `shannon workspaces` command — list all workspaces.
+ * `shanom workspaces` command — list all workspaces.
  */
 
 import { execFileSync } from 'node:child_process';

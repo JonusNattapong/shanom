@@ -1,0 +1,93 @@
+{
+  "timestamp": "2026-04-07T03:55:36.714Z",
+  "target": "test-app/app.js",
+  "totalVulnerabilities": 12,
+  "bySeverity": {
+    "CRITICAL": 8,
+    "HIGH": 4
+  },
+  "byType": {
+    "Secret": 4,
+    "SQL Injection": 2,
+    "XSS": 1,
+    "Weak Crypto": 1,
+    "Code Injection": 1,
+    "Path Traversal": 1,
+    "SSRF": 1,
+    "Info Disclosure": 1
+  },
+  "findings": [
+    {
+      "type": "Secret",
+      "name": "Hardcoded API Key",
+      "severity": "CRITICAL",
+      "evidence": "Found in app.js"
+    },
+    {
+      "type": "Secret",
+      "name": "Hardcoded DB Password",
+      "severity": "CRITICAL",
+      "evidence": "Found in app.js"
+    },
+    {
+      "type": "Secret",
+      "name": "Hardcoded JWT Secret",
+      "severity": "CRITICAL",
+      "evidence": "Found in app.js"
+    },
+    {
+      "type": "Secret",
+      "name": "Hardcoded AWS Key",
+      "severity": "CRITICAL",
+      "evidence": "Found in app.js"
+    },
+    {
+      "type": "SQL Injection",
+      "name": "SQL Injection in /api/users",
+      "severity": "CRITICAL",
+      "evidence": "String interpolation in SQL query"
+    },
+    {
+      "type": "SQL Injection",
+      "name": "SQL Injection in /api/login",
+      "severity": "CRITICAL",
+      "evidence": "String interpolation in SQL query"
+    },
+    {
+      "type": "XSS",
+      "name": "Reflected XSS in /api/search",
+      "severity": "HIGH",
+      "evidence": "User input reflected without encoding"
+    },
+    {
+      "type": "Weak Crypto",
+      "name": "MD5 Hash Usage",
+      "severity": "HIGH",
+      "evidence": "Using deprecated MD5 algorithm"
+    },
+    {
+      "type": "Code Injection",
+      "name": "eval() usage",
+      "severity": "CRITICAL",
+      "evidence": "User input passed to eval()"
+    },
+    {
+      "type": "Path Traversal",
+      "name": "Path Traversal in /api/file",
+      "severity": "HIGH",
+      "evidence": "User input used in file path"
+    },
+    {
+      "type": "SSRF",
+      "name": "SSRF in /api/fetch",
+      "severity": "HIGH",
+      "evidence": "User-controlled URL in HTTP request"
+    },
+    {
+      "type": "Info Disclosure",
+      "name": "Debug endpoint exposes secrets",
+      "severity": "CRITICAL",
+      "evidence": "/api/debug exposes environment and config"
+    }
+  ]
+}

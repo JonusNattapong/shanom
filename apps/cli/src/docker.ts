@@ -15,8 +15,8 @@ import { getMode } from './mode.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const NPX_IMAGE_REPO = 'keygraph/shannon';
-const DEV_IMAGE = 'shannon-worker';
+const NPX_IMAGE_REPO = 'shanom';
+const DEV_IMAGE = 'shanom-worker';
 
 export function getWorkerImage(version: string): string {
   return getMode() === 'local' ? DEV_IMAGE : `${NPX_IMAGE_REPO}:${version}`;
@@ -58,7 +58,7 @@ function runOutput(cmd: string, args: string[]): string {
 export function isTemporalReady(): boolean {
   const output = runOutput('docker', [
     'exec',
-    'shannon-temporal',
+    'shanom-temporal',
     'temporal',
     'operator',
     'cluster',
@@ -71,7 +71,7 @@ export function isTemporalReady(): boolean {
 
 /** Check if the router container is running and healthy. */
 function isRouterReady(): boolean {
-  const status = runOutput('docker', ['inspect', '--format', '{{.State.Health.Status}}', 'shannon-router']);
+  const status = runOutput('docker', ['inspect', '--format', '{{.State.Health.Status}}', 'shanom-router']);
   return status === 'healthy';
 }
 
@@ -95,7 +95,7 @@ export async function ensureInfra(useRouter: boolean): Promise<void> {
   if (temporalReady && routerNeeded) {
     console.log('Starting router...');
   } else {
-    console.log('Starting Shannon infrastructure...');
+    console.log('Starting Shanom infrastructure...');
   }
   execFileSync('docker', composeArgs, { stdio: 'inherit' });
 
@@ -161,7 +161,7 @@ export function ensureImage(version: string): void {
     } catch {
       console.error(`\nERROR: Failed to pull ${image}`);
       console.error('The image may not be available for your platform yet.');
-      console.error('Check https://hub.docker.com/r/keygraph/shannon for available tags.');
+      console.error('Check https://hub.docker.com/r/shanom for available tags.');
       process.exit(1);
     }
     pruneOldImages(version);
@@ -202,25 +202,25 @@ export interface WorkerOptions {
  * Spawn the worker container in detached mode and return the process.
  */
 export function spawnWorker(opts: WorkerOptions): ChildProcess {
-  const args = ['run', '-d', '--rm', '--name', opts.containerName, '--network', 'shannon-net'];
+  const args = ['run', '-d', '--rm', '--name', opts.containerName, '--network', 'shanom-net'];
 
   // Add host flag for Linux
   args.push(...addHostFlag());
 
   // UID remapping for Linux bind mounts
   if (os.platform() === 'linux' && process.getuid && process.getgid) {
-    args.push('-e', `SHANNON_HOST_UID=${process.getuid()}`, '-e', `SHANNON_HOST_GID=${process.getgid()}`);
+    args.push('-e', `SHANOM_HOST_UID=${process.getuid()}`, '-e', `SHANOM_HOST_GID=${process.getgid()}`);
   }
 
   // Volume mounts
   args.push('-v', `${opts.workspacesDir}:/app/workspaces`);
   args.push('-v', `${opts.repo.hostPath}:${opts.repo.containerPath}:ro`);
 
-  // Writable overlays: shadow .shannon/ inside the :ro repo with workspace-backed dirs
+  // Writable overlays: shadow .shanom/ inside the :ro repo with workspace-backed dirs
   const workspacePath = path.join(opts.workspacesDir, opts.workspace);
-  args.push('-v', `${path.join(workspacePath, 'deliverables')}:${opts.repo.containerPath}/.shannon/deliverables`);
-  args.push('-v', `${path.join(workspacePath, 'scratchpad')}:${opts.repo.containerPath}/.shannon/scratchpad`);
-  args.push('-v', `${path.join(workspacePath, '.playwright-cli')}:${opts.repo.containerPath}/.shannon/.playwright-cli`);
+  args.push('-v', `${path.join(workspacePath, 'deliverables')}:${opts.repo.containerPath}/.shanom/deliverables`);
+  args.push('-v', `${path.join(workspacePath, 'scratchpad')}:${opts.repo.containerPath}/.shanom/scratchpad`);
+  args.push('-v', `${path.join(workspacePath, '.playwright-cli')}:${opts.repo.containerPath}/.shanom/.playwright-cli`);
 
   // Local mode: mount prompts for live editing
   if (opts.promptsDir) {
@@ -272,10 +272,10 @@ export function spawnWorker(opts: WorkerOptions): ChildProcess {
 }
 
 /**
- * Stop all running shannon-worker-* containers.
+ * Stop all running shanom-worker-* containers.
  */
 export function stopWorkers(): void {
-  const workers = runOutput('docker', ['ps', '-q', '--filter', 'name=shannon-worker-']);
+  const workers = runOutput('docker', ['ps', '-q', '--filter', 'name=shanom-worker-']);
   if (!workers) return;
 
   const ids = workers.split('\n').filter(Boolean);
@@ -294,7 +294,7 @@ export function stopInfra(clean: boolean): void {
 }
 
 /**
- * Remove old keygraph/shannon images that don't match the current version.
+ * Remove old shanom images that don't match the current version.
  */
 function pruneOldImages(currentVersion: string): void {
   const output = runOutput('docker', ['images', NPX_IMAGE_REPO, '--format', '{{.Tag}}']);
@@ -314,7 +314,7 @@ export function listRunningWorkers(): string {
   return runOutput('docker', [
     'ps',
     '--filter',
-    'name=shannon-worker-',
+    'name=shanom-worker-',
     '--format',
     'table {{.Names}}\t{{.Status}}\t{{.RunningFor}}',
   ]);

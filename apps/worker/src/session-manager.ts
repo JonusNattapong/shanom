@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Keygraph, Inc.
+// Copyright (C) 2025 JonusNattapong
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License version 3
@@ -104,6 +104,31 @@ export const AGENTS: Readonly<Record<AgentName, AgentDefinition>> = Object.freez
     deliverableFilename: 'comprehensive_security_assessment_report.md',
     modelTier: 'small',
   },
+  // Enhanced reporting agents
+  'report-technical': {
+    name: 'report-technical',
+    displayName: 'Technical pentest report agent',
+    prerequisites: ['report'],
+    promptTemplate: 'report-technical',
+    deliverableFilename: 'technical_pentest_report.md',
+    modelTier: 'medium',
+  },
+  'report-remediation': {
+    name: 'report-remediation',
+    displayName: 'Remediation guidance report agent',
+    prerequisites: ['report-technical'],
+    promptTemplate: 'report-remediation',
+    deliverableFilename: 'remediation_guidance_report.md',
+    modelTier: 'medium',
+  },
+  'report-board': {
+    name: 'report-board',
+    displayName: 'Board executive report agent',
+    prerequisites: ['report-remediation'],
+    promptTemplate: 'report-board',
+    deliverableFilename: 'board_executive_report.md',
+    modelTier: 'small',
+  },
 });
 
 // Phase names for metrics aggregation
@@ -124,6 +149,10 @@ export const AGENT_PHASE_MAP: Readonly<Record<AgentName, PhaseName>> = Object.fr
   'authz-exploit': 'exploitation',
   'ssrf-exploit': 'exploitation',
   report: 'reporting',
+  // Enhanced reporting agents
+  'report-technical': 'reporting',
+  'report-remediation': 'reporting',
+  'report-board': 'reporting',
 });
 
 // Factory function for vulnerability queue validators
@@ -143,7 +172,7 @@ function createVulnValidator(vulnType: VulnType): AgentValidator {
 // Factory function for exploit deliverable validators
 function createExploitValidator(vulnType: VulnType): AgentValidator {
   return async (sourceDir: string): Promise<boolean> => {
-    const evidenceFile = path.join(sourceDir, '.shannon', 'deliverables', `${vulnType}_exploitation_evidence.md`);
+    const evidenceFile = path.join(sourceDir, '.shanom', 'deliverables', `${vulnType}_exploitation_evidence.md`);
     return await fs.pathExists(evidenceFile);
   };
 }
@@ -173,19 +202,23 @@ export const PLAYWRIGHT_SESSION_MAPPING: Record<string, PlaywrightSession> = Obj
 
   // Phase 5: Reporting
   'report-executive': 'agent3',
+  // Enhanced reporting agents
+  'report-technical': 'agent1',
+  'report-remediation': 'agent2',
+  'report-board': 'agent3',
 });
 
 // Direct agent-to-validator mapping - much simpler than pattern matching
 export const AGENT_VALIDATORS: Record<AgentName, AgentValidator> = Object.freeze({
   // Pre-reconnaissance agent - validates the code analysis deliverable created by the agent
   'pre-recon': async (sourceDir: string): Promise<boolean> => {
-    const codeAnalysisFile = path.join(sourceDir, '.shannon', 'deliverables', 'pre_recon_deliverable.md');
+    const codeAnalysisFile = path.join(sourceDir, '.shanom', 'deliverables', 'pre_recon_deliverable.md');
     return await fs.pathExists(codeAnalysisFile);
   },
 
   // Reconnaissance agent
   recon: async (sourceDir: string): Promise<boolean> => {
-    const reconFile = path.join(sourceDir, '.shannon', 'deliverables', 'recon_deliverable.md');
+    const reconFile = path.join(sourceDir, '.shanom', 'deliverables', 'recon_deliverable.md');
     return await fs.pathExists(reconFile);
   },
 
@@ -205,7 +238,7 @@ export const AGENT_VALIDATORS: Record<AgentName, AgentValidator> = Object.freeze
 
   // Executive report agent
   report: async (sourceDir: string, logger: ActivityLogger): Promise<boolean> => {
-    const reportFile = path.join(sourceDir, '.shannon', 'deliverables', 'comprehensive_security_assessment_report.md');
+    const reportFile = path.join(sourceDir, '.shanom', 'deliverables', 'comprehensive_security_assessment_report.md');
 
     const reportExists = await fs.pathExists(reportFile);
 
@@ -213,6 +246,32 @@ export const AGENT_VALIDATORS: Record<AgentName, AgentValidator> = Object.freeze
       logger.error('Missing required deliverable: comprehensive_security_assessment_report.md');
     }
 
+    return reportExists;
+  },
+
+  // Enhanced reporting agents
+  'report-technical': async (sourceDir: string, logger: ActivityLogger): Promise<boolean> => {
+    const reportFile = path.join(sourceDir, '.shanom', 'deliverables', 'technical_pentest_report.md');
+    const reportExists = await fs.pathExists(reportFile);
+    if (!reportExists) {
+      logger.error('Missing required deliverable: technical_pentest_report.md');
+    }
+    return reportExists;
+  },
+  'report-remediation': async (sourceDir: string, logger: ActivityLogger): Promise<boolean> => {
+    const reportFile = path.join(sourceDir, '.shanom', 'deliverables', 'remediation_guidance_report.md');
+    const reportExists = await fs.pathExists(reportFile);
+    if (!reportExists) {
+      logger.error('Missing required deliverable: remediation_guidance_report.md');
+    }
+    return reportExists;
+  },
+  'report-board': async (sourceDir: string, logger: ActivityLogger): Promise<boolean> => {
+    const reportFile = path.join(sourceDir, '.shanom', 'deliverables', 'board_executive_report.md');
+    const reportExists = await fs.pathExists(reportFile);
+    if (!reportExists) {
+      logger.error('Missing required deliverable: board_executive_report.md');
+    }
     return reportExists;
   },
 });

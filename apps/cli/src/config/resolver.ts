@@ -1,7 +1,7 @@
 /**
  * Configuration resolver with environment-first, TOML-fallback precedence.
  *
- * Priority: process.env > ~/.shannon/config.toml
+ * Priority: process.env > ~/.shanom/config.toml
  * Env var names match .env.example exactly; TOML uses nested sections.
  */
 
@@ -48,6 +48,7 @@ const CONFIG_MAP: readonly ConfigMapping[] = [
   { env: 'ROUTER_DEFAULT', toml: 'router.default', type: 'string' },
   { env: 'OPENAI_API_KEY', toml: 'router.openai_key', type: 'string' },
   { env: 'OPENROUTER_API_KEY', toml: 'router.openrouter_key', type: 'string' },
+  { env: 'KILOCODE_API_KEY', toml: 'router.kilocode_key', type: 'string' },
 
   // Model tiers
   { env: 'ANTHROPIC_SMALL_MODEL', toml: 'models.small', type: 'string' },
@@ -100,7 +101,7 @@ function loadTOML(): TOMLConfig | null {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`\nFailed to parse ${configPath}: ${message}`);
-    console.error(`\nRun 'npx @keygraph/shannon setup' to reconfigure.\n`);
+    console.error(`\nRun 'npx shanom setup' to reconfigure.\n`);
     process.exit(1);
   }
 }
@@ -268,7 +269,7 @@ function validateConfig(config: TOMLConfig): string[] {
  * Resolve all config values into process.env (npx mode only).
  *
  * For each mapped variable: if not already set in the environment,
- * look it up in ~/.shannon/config.toml and inject it into process.env.
+ * look it up in ~/.shanom/config.toml and inject it into process.env.
  * Local mode uses .env exclusively — TOML is skipped.
  * Exits with an error if the TOML contains unknown or invalid keys.
  */
