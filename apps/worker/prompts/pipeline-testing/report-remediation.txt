@@ -1,0 +1,8 @@
+@include(shared/_filesystem.txt)
+
+Read `.shanom/deliverables/technical_pentest_report.md`, create a simplified remediation summary with:
+- Priority 1 Fixes (Critical only)
+- High-level effort estimates
+- Key recommendations
+
+Save to `.shanom/deliverables/remediation_guidance_report.md`. Say "Done".

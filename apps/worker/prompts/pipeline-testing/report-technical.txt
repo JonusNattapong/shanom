@@ -1,0 +1,8 @@
+@include(shared/_filesystem.txt)
+
+Read `.shanom/deliverables/comprehensive_security_assessment_report.md`, create a simplified technical summary with:
+- Executive Summary (2-3 sentences)
+- Vulnerability Count by Severity
+- Top 3 Technical Findings
+
+Save to `.shanom/deliverables/technical_pentest_report.md`. Say "Done".

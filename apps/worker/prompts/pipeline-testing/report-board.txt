@@ -1,0 +1,9 @@
+@include(shared/_filesystem.txt)
+
+Read `.shanom/deliverables/remediation_guidance_report.md`, create a simplified board summary with:
+- Overall Risk Rating
+- Key Business Risks (2-3 bullet points)
+- Recommended Investment
+- Decision Required
+
+Save to `.shanom/deliverables/board_executive_report.md`. Say "Done".
